@@ -1,0 +1,86 @@
+﻿<UserControl x:Class="ArkSaveAnalyzer.Savegame.SavegameControl"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" 
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:infrastructure="clr-namespace:ArkSaveAnalyzer.Infrastructure"
+        xmlns:savegameToolkit="clr-namespace:SavegameToolkit;assembly=SavegameToolkit"
+        xmlns:converters="clr-namespace:ArkSaveAnalyzer.Savegame.Converters"
+        d:DesignHeight="150" d:DesignWidth="1000" 
+        DataContext="{Binding Savegame,Source={StaticResource Locator}}">
+    <UserControl.Resources>
+        <converters:ArkNamesConverter x:Key="arkNamesConverter" />
+        <converters:SpecialTextConverter x:Key="specialTextConverter" />
+    </UserControl.Resources>
+    <DockPanel>
+        <StackPanel DockPanel.Dock="Top" Background="White" Orientation="Horizontal" IsEnabled="{Binding UiEnabled}">
+            <StackPanel.Resources>
+                <Style TargetType="RadioButton">
+                    <Setter Property="Margin" Value="2 2 10 2" />
+                    <Setter Property="VerticalAlignment" Value="Center" />
+                </Style>
+            </StackPanel.Resources>
+            <RadioButton Content="The Island" Command="{Binding ContentCommand}" CommandParameter="TheIsland" />
+            <RadioButton Content="Scorched Earth" Command="{Binding ContentCommand}" CommandParameter="ScorchedEarth" />
+            <RadioButton Content="Aberration" Command="{Binding ContentCommand}" CommandParameter="Aberration" />
+            <RadioButton Content="The Center" Command="{Binding ContentCommand}" CommandParameter="TheCenter" />
+            <RadioButton Content="Ragnarok" Command="{Binding ContentCommand}" CommandParameter="Ragnarok" />
+
+            <Label Content="Goto Id:" Target="{Binding ElementName=GotoId}" IsEnabled="{Binding UiEnabled}" />
+            <TextBox x:Name="GotoId" Width="70" Text="{Binding GotoId,UpdateSourceTrigger=PropertyChanged,Delay=1000}" VerticalAlignment="Center" IsEnabled="{Binding UiEnabled}" />
+
+            <Label Content="Class Filter:" Target="{Binding ElementName=Filter}" IsEnabled="{Binding UiEnabled}" />
+            <TextBox x:Name="Filter" Width="150" Text="{Binding FilterText,UpdateSourceTrigger=PropertyChanged,Delay=1000}" VerticalAlignment="Center" IsEnabled="{Binding UiEnabled}" />
+            
+            <Button Content="Special Action" VerticalAlignment="Center" Margin="10 0 0 0" Padding="5 0" Command="{Binding SpecialCommand}" />
+        </StackPanel>
+
+        <ListView x:Name="ListView" ItemsSource="{Binding Objects}" SelectedItem="{Binding SelectedObject}">
+            <ListView.InputBindings>
+                <KeyBinding Key="Enter" Command="{Binding ShowDataCommand}" />
+            </ListView.InputBindings>
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="infrastructure:HandleDoubleClickBehavior.Command" Value="{Binding DataContext.ShowDataCommand,ElementName=ListView}"></Setter>
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListView.Resources>
+                <Style TargetType="{x:Type GridViewColumnHeader}">
+                    <Setter Property="HorizontalContentAlignment" Value="Left" />
+                </Style>
+            </ListView.Resources>
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Id" Width="100">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate DataType="{x:Type savegameToolkit:GameObject}">
+                                <TextBlock Text="{Binding Id}" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Class" Width="300">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate DataType="{x:Type savegameToolkit:GameObject}">
+                                <TextBlock Text="{Binding ClassString}" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Names" Width="Auto">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate DataType="{x:Type savegameToolkit:GameObject}">
+                                <TextBlock Text="{Binding Converter={StaticResource arkNamesConverter}}" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Special" Width="Auto">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate DataType="{x:Type savegameToolkit:GameObject}">
+                                <TextBlock Text="{Binding Converter={StaticResource specialTextConverter}}" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </DockPanel>
+</UserControl>
