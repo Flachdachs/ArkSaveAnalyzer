@@ -50,13 +50,13 @@ namespace ArkSaveAnalyzer.Savegame {
 
         #region GotoId
 
-        private int gotoId;
+        private string gotoId;
 
-        public int GotoId {
+        public string GotoId {
             get => gotoId;
             set {
-                if (Set(ref gotoId, value)) {
-                    Messenger.Default.Send(new GotoIdMessage(gotoId));
+                if (Set(ref gotoId, value) && int.TryParse(value, out int id)) {
+                    Messenger.Default.Send(new GotoIdMessage(id));
                 }
             }
         }
@@ -75,7 +75,7 @@ namespace ArkSaveAnalyzer.Savegame {
         #endregion
 
         public SavegameViewModel() {
-            ContentCommand = new RelayCommand<string>(mapName => loadContent(mapName, true), s => UiEnabled);
+            ContentCommand = new RelayCommand<string>(mapName => loadContent(mapName, false), s => UiEnabled);
             ShowDataCommand = new RelayCommand(showData, () => UiEnabled);
             SpecialCommand = new RelayCommand(specialCommand, () => UiEnabled);
 
@@ -88,11 +88,11 @@ namespace ArkSaveAnalyzer.Savegame {
             });
         }
 
-        private async void loadContent(string mapName, bool includingCopy = false) {
+        private async void loadContent(string mapName, bool getCached = true) {
             UiEnabled = false;
 
             try {
-                GameObjectContainer objects = await SavegameService.GetGameObjects(mapName, includingCopy);
+                GameObjectContainer objects = await SavegameService.GetGameObjects(mapName, getCached);
 
                 IEnumerable<GameObject> filteredObjects = objects;
                 if (!string.IsNullOrWhiteSpace(filterText)) {

@@ -90,7 +90,7 @@ namespace ArkSaveAnalyzer.Wildlife {
         #endregion
 
         public WildlifeViewModel() {
-            ContentCommand = new RelayCommand<string>(mapName => loadContent(mapName, true), s => UiEnabled);
+            ContentCommand = new RelayCommand<string>(mapName => loadContent(mapName, false), s => UiEnabled);
             ShowDataCommand = new RelayCommand(showData, () => UiEnabled);
             SortCommand = new RelayCommand<string>(sort, s => UiEnabled);
 
@@ -172,7 +172,7 @@ namespace ArkSaveAnalyzer.Wildlife {
             }
         }
 
-        private async void loadContent(string mapName, bool includingCopy = false) {
+        private async void loadContent(string mapName, bool getCached = true) {
             CurrentMapName = mapName;
 
             UiEnabled = false;
@@ -180,20 +180,22 @@ namespace ArkSaveAnalyzer.Wildlife {
             try {
                 Objects.Clear();
 
-                GameObjectContainer objects = await SavegameService.GetGameObjects(mapName, includingCopy);
+                ArkData arkData = await ArkDataService.GetArkData();
+
+                GameObjectContainer objects = await SavegameService.GetGameObjects(mapName, getCached);
 
                 IEnumerable<GameObject> filteredObjects = objects.Where(o => o.IsCreature() && o.IsWild());
 
-                string[] excludedWildlife = Settings.Default.ExcludedWildlife.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries).Where(s => !string.IsNullOrWhiteSpace(s)).ToArray();
+                string[] excludedWildlife = Settings.Default.ExcludedWildlife
+                        .Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries)
+                        .Where(s => !string.IsNullOrWhiteSpace(s)).ToArray();
 
                 foreach (string exclude in excludedWildlife) {
-                    filteredObjects = filteredObjects.Where(o => !Regex.IsMatch(o.ClassString, exclude, RegexOptions.IgnoreCase));
+                    filteredObjects = filteredObjects.Where(o => !Regex.IsMatch(o.GetNameForCreature(arkData), exclude, RegexOptions.IgnoreCase));
                 }
 
                 if (!string.IsNullOrWhiteSpace(filterText)) {
-                    filteredObjects = filteredObjects.Where(o =>
-                        o.ClassString.ToLowerInvariant().Contains(filterText.ToLowerInvariant()) ||
-                        o.Names.Any(n => n.Name.ToLowerInvariant().Contains(filterText.ToLowerInvariant())));
+                    filteredObjects = filteredObjects.Where(o => o.GetNameForCreature(arkData).ToLowerInvariant().Contains(filterText.ToLowerInvariant()));
                 }
 
                 if (!string.IsNullOrEmpty(filterLevel)) {

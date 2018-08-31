@@ -72,6 +72,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Infrastructure\ArkDataService.cs" />
     <Compile Include="Infrastructure\Messages\InvalidateMapDataMessage.cs" />
     <Compile Include="Infrastructure\Messages\ShowGameObjectMessage.cs" />
     <Compile Include="WikiMap\MapLine.cs" />
@@ -80,6 +81,7 @@
     </Compile>
     <Compile Include="WikiMap\WikiMapService.cs" />
     <Compile Include="WikiMap\WikiMapViewModel.cs" />
+    <Compile Include="Wildlife\Converters\GameObjectToNameConverter.cs" />
     <Compile Include="Wildlife\Converters\GameObjectToSexSymbolConverter.cs" />
     <Compile Include="Wildlife\Converters\GameObjectToLevelConverter.cs" />
     <Compile Include="Savegame\Converters\ArkNamesConverter.cs" />
@@ -171,11 +173,11 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SavegameToolkitAdditions\SavegameToolkitAdditions.csproj">
-      <Project>{ca3f4e34-b3c6-46d2-aad9-271c870cecd4}</Project>
+      <Project>{F05DF8A9-5C7C-44E2-9E55-E4E35C9121A0}</Project>
       <Name>SavegameToolkitAdditions</Name>
     </ProjectReference>
     <ProjectReference Include="..\SavegameToolkit\SavegameToolkit.csproj">
-      <Project>{7b8a4af6-c377-450b-8bd1-d85280464a2d}</Project>
+      <Project>{6213333f-9e44-4f8d-a37f-3a5f495b9b08}</Project>
       <Name>SavegameToolkit</Name>
     </ProjectReference>
   </ItemGroup>

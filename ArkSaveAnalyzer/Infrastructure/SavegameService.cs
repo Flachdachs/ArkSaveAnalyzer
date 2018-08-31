@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using ArkSaveAnalyzer.Properties;
 using SavegameToolkit;
@@ -13,17 +14,26 @@ namespace ArkSaveAnalyzer.Infrastructure {
         // mapName => SaveJsonObjects
         private static readonly Dictionary<string, GameObjectContainer> savedMaps = new Dictionary<string, GameObjectContainer>();
 
+        private static string workingDir => string.IsNullOrWhiteSpace(Settings.Default.WorkingDirectory) ? Path.GetTempPath() : Settings.Default.WorkingDirectory;
+
+        private static readonly SemaphoreSlim semaphore = new SemaphoreSlim(1, 1);
+
         public static async Task<GameObject> GetGameObject(string mapName, int id) {
             GameObjectContainer gameObjects = await GetGameObjects(mapName);
 
             return gameObjects[id];
         }
 
-        public static async Task<GameObjectContainer> GetGameObjects(string mapName, bool includingCopy = false) {
-            if (includingCopy || !savedMaps.ContainsKey(mapName)) {
-                savedMaps[mapName] = await getMapObjects(mapName, includingCopy);
+        public static async Task<GameObjectContainer> GetGameObjects(string mapName, bool getCached = true) {
+            // copy and analyze only once at a time
+            await semaphore.WaitAsync();
+            try {
+                if (!getCached || !savedMaps.ContainsKey(mapName)) {
+                    savedMaps[mapName] = await getMapObjects(mapName);
+                }
+            } finally {
+                semaphore.Release();
             }
-
             return savedMaps[mapName];
         }
 
@@ -33,21 +43,19 @@ namespace ArkSaveAnalyzer.Infrastructure {
 
         #endregion
 
-        private static Task<GameObjectContainer> getMapObjects(string mapName, bool includingCopy = false) {
-            if (includingCopy) {
-                copyMap(mapName, null, MapData.For(mapName));
-            }
+        private static Task<GameObjectContainer> getMapObjects(string mapName) {
+            copyMap(mapName, null, MapData.For(mapName));
 
             return readSavegameMap(mapName);
         }
 
         private static void copyMap(string mapName, string fileName, MapData mapData) {
             File.Copy(fileName ?? $@"{Settings.Default.ArkSavedDirectory}\{mapData.Directory}SavedArksLocal\{mapData.Name}.ark",
-                $@"{Settings.Default.WorkingDirectory}\{mapName}.ark", true);
+                $@"{workingDir}\{mapName}.ark", true);
         }
 
         private static Task<GameObjectContainer> readSavegameMap(string mapName) {
-            string fileName = Path.Combine(Settings.Default.WorkingDirectory, mapName + ".ark");
+            string fileName = Path.Combine(workingDir, mapName + ".ark");
             return readSavegameFile(fileName);
         }
 

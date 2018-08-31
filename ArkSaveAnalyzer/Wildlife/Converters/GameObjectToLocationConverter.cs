@@ -6,7 +6,8 @@ using SavegameToolkit;
 using SavegameToolkit.Types;
 
 namespace ArkSaveAnalyzer.Wildlife.Converters {
-    public class GameObjectToLocationConverter:IMultiValueConverter {
+
+    public class GameObjectToLocationConverter : IMultiValueConverter {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture) {
             GameObject gameObject = (GameObject)values[0];
 
@@ -26,4 +27,5 @@ namespace ArkSaveAnalyzer.Wildlife.Converters {
             throw new NotImplementedException();
         }
     }
+
 }

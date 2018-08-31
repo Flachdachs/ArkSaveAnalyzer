@@ -4,6 +4,7 @@ using System.Windows.Data;
 using SavegameToolkit;
 
 namespace ArkSaveAnalyzer.Wildlife.Converters {
+
     public class GameObjectToSexSymbolConverter : IValueConverter {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
             GameObject gameObject = (GameObject)value;
@@ -14,4 +15,5 @@ namespace ArkSaveAnalyzer.Wildlife.Converters {
             throw new NotImplementedException();
         }
     }
+
 }

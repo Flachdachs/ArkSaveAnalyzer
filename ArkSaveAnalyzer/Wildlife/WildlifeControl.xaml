@@ -12,6 +12,7 @@
         <converters:GameObjectToSexSymbolConverter x:Key="SexSymbolConverter" />
         <converters:GameObjectToLevelConverter x:Key="LevelConverter" />
         <converters:GameObjectToLocationConverter x:Key="LocationConverter" />
+        <converters:GameObjectToNameConverter x:Key="NameConverter" />
     </UserControl.Resources>
     <DockPanel>
         <StackPanel DockPanel.Dock="Top" Background="White" Orientation="Horizontal" IsEnabled="{Binding UiEnabled}">
@@ -30,7 +31,7 @@
             <Label Content="Level:" Target="{Binding ElementName=Level}" />
             <TextBox x:Name="Level" Width="70" Text="{Binding FilterLevel,UpdateSourceTrigger=PropertyChanged,Delay=1000}" VerticalAlignment="Center" IsEnabled="{Binding UiEnabled}" />
 
-            <Label Content="Class Filter:" Target="{Binding ElementName=Filter}" />
+            <Label Content="Name Filter:" Target="{Binding ElementName=Filter}" />
             <TextBox x:Name="Filter" Width="150" Text="{Binding FilterText,UpdateSourceTrigger=PropertyChanged,Delay=1000}" VerticalAlignment="Center" IsEnabled="{Binding UiEnabled}" />
         </StackPanel>
 
@@ -64,10 +65,10 @@
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                     <GridViewColumn Width="300">
-                        <GridViewColumnHeader Content="Class" Command="{Binding SortCommand}" CommandParameter="{Binding Content,RelativeSource={RelativeSource Self}}" />
+                        <GridViewColumnHeader Content="Name" Command="{Binding SortCommand}" CommandParameter="{Binding Content,RelativeSource={RelativeSource Self}}" />
                         <GridViewColumn.CellTemplate>
                             <DataTemplate DataType="{x:Type savegameToolkit:GameObject}">
-                                <TextBlock Text="{Binding ClassString}" />
+                                <TextBlock Text="{Binding Converter={StaticResource NameConverter}}" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
@@ -100,7 +101,7 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Width="Auto" Header="Names">
+                    <GridViewColumn Width="Auto" Header="Class">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate DataType="{x:Type savegameToolkit:GameObject}">
                                 <TextBlock Text="{Binding ClassString}" />

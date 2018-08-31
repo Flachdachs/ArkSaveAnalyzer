@@ -26,6 +26,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
@@ -43,11 +44,18 @@
         <TextBox x:Name="WorkingDirectory" Grid.Row="1" Grid.Column="1" Text="{Binding WorkingDirectory}" />
         <Button Grid.Row="1" Grid.Column="2" Content="..." Command="{Binding ChooseWorkingDirectory}" />
 
-        <StackPanel Orientation="Vertical" Grid.Row="2" Grid.Column="0">
+        <TextBlock Grid.Row="2" Grid.Column="0" Margin="5 5 5 5">ArkData</TextBlock>
+        <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal">
+            <Button Content="Update/Download" Command="{Binding UpdateCommand}" />
+            <TextBlock Margin="0 2 0 0">only needed after content changes of Ark</TextBlock>
+        </StackPanel>
+
+        <StackPanel Orientation="Vertical" Grid.Row="3" Grid.Column="0">
             <Label Content="Excluded Wildlife" Target="{Binding ElementName=ExcludedWildlife}" VerticalAlignment="Top" />
             <TextBlock Margin="5 0 5 5">RegExp for class names</TextBlock>
+            <Button Content="Test" Command="{Binding UpdateCommand}" />
         </StackPanel>
-        <TextBox x:Name="ExcludedWildlife" Grid.Row="2" Grid.Column="1" Text="{Binding ExcludedWildlife}" AcceptsReturn="True" 
+        <TextBox x:Name="ExcludedWildlife" Grid.Row="3" Grid.Column="1" Text="{Binding ExcludedWildlife}" AcceptsReturn="True" 
                 VerticalAlignment="Stretch" Margin="0 5 0 10" VerticalScrollBarVisibility="Auto" />
     </Grid>
 </UserControl>
