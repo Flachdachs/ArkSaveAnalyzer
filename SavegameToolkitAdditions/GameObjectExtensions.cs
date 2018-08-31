@@ -66,5 +66,9 @@ namespace SavegameToolkitAdditions {
             short extraLevel = statusComponent.GetPropertyValue<short>("ExtraCharacterLevel");
             return baseLevel + extraLevel;
         }
+
+        public static string GetNameForCreature(this GameObject gameObject, ArkData arkData) {
+            return arkData.GetCreatureForClass(gameObject.ClassString)?.Name;
+        }
     }
 }

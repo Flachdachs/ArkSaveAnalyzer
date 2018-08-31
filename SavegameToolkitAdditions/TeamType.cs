@@ -20,9 +20,9 @@ namespace SavegameToolkitAdditions
     }
 
     public static class TeamTypes {
-        private const int PLAYER_START = 50000;
-        private const int TRIBE_START = 1000000000;
-        private const int BREEDING_ID = 2000000000;
+        private const int PLAYER_START = 50_000;
+        private const int TRIBE_START = 1_000_000_000;
+        private const int BREEDING_ID = 2_000_000_000;
 
         public static TeamType ForTeam(int teamId) {
             if (teamId < PLAYER_START) {
@@ -37,7 +37,7 @@ namespace SavegameToolkitAdditions
                 return TeamType.Tribe;
             }
 
-            return teamId == 2000000000 ? TeamType.Breeding : TeamType.Unknown;
+            return teamId == BREEDING_ID ? TeamType.Breeding : TeamType.Unknown;
         }
 
         public static bool IsTamed(this TeamType teamType) {
