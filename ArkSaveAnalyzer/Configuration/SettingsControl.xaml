@@ -52,8 +52,7 @@
 
         <StackPanel Orientation="Vertical" Grid.Row="3" Grid.Column="0">
             <Label Content="Excluded Wildlife" Target="{Binding ElementName=ExcludedWildlife}" VerticalAlignment="Top" />
-            <TextBlock Margin="5 0 5 5">RegExp for class names</TextBlock>
-            <Button Content="Test" Command="{Binding UpdateCommand}" />
+            <TextBlock Margin="5 0 5 5">RegExp for names</TextBlock>
         </StackPanel>
         <TextBox x:Name="ExcludedWildlife" Grid.Row="3" Grid.Column="1" Text="{Binding ExcludedWildlife}" AcceptsReturn="True" 
                 VerticalAlignment="Stretch" Margin="0 5 0 10" VerticalScrollBarVisibility="Auto" />

@@ -1,13 +1,21 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Windows.Forms;
 using ArkSaveAnalyzer.Infrastructure;
+using ArkSaveAnalyzer.Infrastructure.Messages;
 using ArkSaveAnalyzer.Properties;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Messaging;
+using MessageBox = System.Windows.MessageBox;
 
 namespace ArkSaveAnalyzer.Configuration {
 
     // ReSharper disable once ClassNeverInstantiated.Global
     public class SettingsViewModel : ViewModelBase {
+        #region ArkSavedFolder
+
         private string arkSavedFolder;
 
         public string ArkSavedFolder {
@@ -19,6 +27,10 @@ namespace ArkSaveAnalyzer.Configuration {
             }
         }
 
+        #endregion
+
+        #region WorkingDirectory
+
         private string workingDirectory;
 
         public string WorkingDirectory {
@@ -29,6 +41,10 @@ namespace ArkSaveAnalyzer.Configuration {
                 Settings.Default.Save();
             }
         }
+
+        #endregion
+
+        #region ExcludedWildlife
 
         private string excludedWildlife;
 
@@ -42,6 +58,8 @@ namespace ArkSaveAnalyzer.Configuration {
             }
         }
 
+        #endregion
+
         public RelayCommand ChooseSavedFolder { get; }
         public RelayCommand ChooseWorkingDirectory { get; }
         public RelayCommand UpdateCommand { get; }
@@ -54,6 +72,19 @@ namespace ArkSaveAnalyzer.Configuration {
             ArkSavedFolder = Settings.Default.ArkSavedDirectory;
             WorkingDirectory = Settings.Default.WorkingDirectory;
             ExcludedWildlife = Settings.Default.ExcludedWildlife;
+
+            Messenger.Default.Register<ExcludeWildlifeMessage>(this, message => handleExcludedWildlife(message.Name));
+        }
+
+        private void handleExcludedWildlife(string name) {
+            List<string> excluded = ExcludedWildlife
+                    .Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries)
+                    .Where(s => !string.IsNullOrWhiteSpace(s)).ToList();
+            if (excluded.Contains(name, StringComparer.InvariantCultureIgnoreCase))
+                return;
+            excluded.Add(name);
+            excluded.Sort(StringComparer.InvariantCulture);
+            ExcludedWildlife = string.Join(Environment.NewLine, excluded);
         }
 
         private void chooseSavedFolder() {
@@ -80,6 +111,7 @@ namespace ArkSaveAnalyzer.Configuration {
 
         private async void update() {
             await ArkDataService.GetArkData(true);
+            MessageBox.Show("Done.");
         }
     }
 

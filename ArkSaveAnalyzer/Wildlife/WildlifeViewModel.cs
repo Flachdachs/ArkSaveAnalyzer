@@ -20,9 +20,12 @@ namespace ArkSaveAnalyzer.Wildlife {
         private string sortColumn;
         public Dictionary<string, ListSortDirection> SortDirections { get; } = new Dictionary<string, ListSortDirection>();
 
+        private readonly ArkData arkData;
+
         public RelayCommand<string> ContentCommand { get; }
         public RelayCommand ShowDataCommand { get; }
         public RelayCommand<string> SortCommand { get; set; }
+        public RelayCommand ExcludeCommand { get; }
 
         public ObservableCollection<GameObject> Objects { get; } = new ObservableCollection<GameObject>();
 
@@ -93,6 +96,9 @@ namespace ArkSaveAnalyzer.Wildlife {
             ContentCommand = new RelayCommand<string>(mapName => loadContent(mapName, false), s => UiEnabled);
             ShowDataCommand = new RelayCommand(showData, () => UiEnabled);
             SortCommand = new RelayCommand<string>(sort, s => UiEnabled);
+            ExcludeCommand=new RelayCommand(exclude, () => UiEnabled);
+
+            arkData = ArkDataService.GetArkData().Result;
 
             Messenger.Default.Register<InvalidateMapDataMessage>(this, message => {
                 Application.Current.Dispatcher.Invoke(() => {
@@ -137,6 +143,9 @@ namespace ArkSaveAnalyzer.Wildlife {
                 case "Class":
                     cmp = string.Compare(a.ClassString, b.ClassString, StringComparison.InvariantCulture);
                     break;
+                case "Name":
+                    cmp = string.Compare(a.GetNameForCreature(arkData), b.GetNameForCreature(arkData), StringComparison.InvariantCulture);
+                    break;
                 case "Level":
                     cmp = a.GetBaseLevel() - b.GetBaseLevel();
                     break;
@@ -172,6 +181,14 @@ namespace ArkSaveAnalyzer.Wildlife {
             }
         }
 
+        private void exclude() {
+            if (SelectedObject == null)
+                return;
+            Messenger.Default.Send(new ExcludeWildlifeMessage(SelectedObject.GetNameForCreature(arkData)));
+            loadContent(CurrentMapName);
+        }
+
+
         private async void loadContent(string mapName, bool getCached = true) {
             CurrentMapName = mapName;
 
@@ -179,8 +196,6 @@ namespace ArkSaveAnalyzer.Wildlife {
 
             try {
                 Objects.Clear();
-
-                ArkData arkData = await ArkDataService.GetArkData();
 
                 GameObjectContainer objects = await SavegameService.GetGameObjects(mapName, getCached);
 

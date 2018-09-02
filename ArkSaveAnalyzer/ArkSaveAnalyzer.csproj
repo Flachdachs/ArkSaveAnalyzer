@@ -110,6 +110,7 @@
     <Compile Include="MainViewModel.cs" />
     <Compile Include="ViewModelLocator.cs" />
     <Compile Include="Wildlife\Converters\GameObjectToLocationConverter.cs" />
+    <Compile Include="Infrastructure\Messages\ExcludeWildlifeMessage.cs" />
     <Compile Include="Wildlife\WildlifeControl.xaml.cs">
       <DependentUpon>WildlifeControl.xaml</DependentUpon>
     </Compile>

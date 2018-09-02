@@ -43,6 +43,8 @@
                 <ContextMenu x:Key="ItemContextMenu">
                     <MenuItem Header="Character BP"
                             Command="{Binding Path=DataContext.ShowDataCommand, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListView}}" />
+                    <MenuItem Header="Exclude"
+                            Command="{Binding Path=DataContext.ExcludeCommand, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListView}}" />
                 </ContextMenu>
             </ListView.Resources>
             <ListView.InputBindings>
@@ -101,7 +103,8 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Width="Auto" Header="Class">
+                    <GridViewColumn Width="Auto">
+                        <GridViewColumnHeader Content="Class" Command="{Binding SortCommand}" CommandParameter="{Binding Content,RelativeSource={RelativeSource Self}}" />
                         <GridViewColumn.CellTemplate>
                             <DataTemplate DataType="{x:Type savegameToolkit:GameObject}">
                                 <TextBlock Text="{Binding ClassString}" />
