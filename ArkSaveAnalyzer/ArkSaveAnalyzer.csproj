@@ -110,11 +110,12 @@
     <Compile Include="MainViewModel.cs" />
     <Compile Include="ViewModelLocator.cs" />
     <Compile Include="Wildlife\Converters\GameObjectToLocationConverter.cs" />
-    <Compile Include="Infrastructure\Messages\ExcludeWildlifeMessage.cs" />
+    <Compile Include="Infrastructure\Messages\WildlifeExcludeMessage.cs" />
     <Compile Include="Wildlife\WildlifeControl.xaml.cs">
       <DependentUpon>WildlifeControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Wildlife\WildlifeViewModel.cs" />
+    <Compile Include="Infrastructure\Messages\WildlifeWishListMessage.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

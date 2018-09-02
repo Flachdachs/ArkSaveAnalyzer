@@ -18,7 +18,7 @@ namespace ArkSaveAnalyzer.Wildlife {
 
     public class WildlifeViewModel : ViewModelBase {
         private string sortColumn;
-        public Dictionary<string, ListSortDirection> SortDirections { get; } = new Dictionary<string, ListSortDirection>();
+        private readonly Dictionary<string, ListSortDirection> sortDirections = new Dictionary<string, ListSortDirection>();
 
         private readonly ArkData arkData;
 
@@ -26,6 +26,7 @@ namespace ArkSaveAnalyzer.Wildlife {
         public RelayCommand ShowDataCommand { get; }
         public RelayCommand<string> SortCommand { get; set; }
         public RelayCommand ExcludeCommand { get; }
+        public RelayCommand WishListCommand { get; }
 
         public ObservableCollection<GameObject> Objects { get; } = new ObservableCollection<GameObject>();
 
@@ -48,7 +49,7 @@ namespace ArkSaveAnalyzer.Wildlife {
             get => filterLevel;
             set {
                 if (Set(ref filterLevel, value)) {
-                    loadContent(CurrentMapName);
+                    loadAndSortCurrentMap();
                 }
             }
         }
@@ -63,7 +64,22 @@ namespace ArkSaveAnalyzer.Wildlife {
             get => filterText;
             set {
                 if (Set(ref filterText, value)) {
-                    loadContent(CurrentMapName);
+                    loadAndSortCurrentMap();
+                }
+            }
+        }
+
+        #endregion
+
+        #region ApplyWishList
+
+        private bool applyWishList;
+
+        public bool ApplyWishList {
+            get => applyWishList;
+            set {
+                if (Set(ref applyWishList, value)) {
+                    loadAndSortCurrentMap();
                 }
             }
         }
@@ -95,8 +111,9 @@ namespace ArkSaveAnalyzer.Wildlife {
         public WildlifeViewModel() {
             ContentCommand = new RelayCommand<string>(mapName => loadContent(mapName, false), s => UiEnabled);
             ShowDataCommand = new RelayCommand(showData, () => UiEnabled);
-            SortCommand = new RelayCommand<string>(sort, s => UiEnabled);
-            ExcludeCommand=new RelayCommand(exclude, () => UiEnabled);
+            SortCommand = new RelayCommand<string>(changeSort, s => UiEnabled);
+            ExcludeCommand = new RelayCommand(exclude, () => UiEnabled);
+            WishListCommand = new RelayCommand(addToWishList, () => UiEnabled);
 
             arkData = ArkDataService.GetArkData().Result;
 
@@ -109,20 +126,28 @@ namespace ArkSaveAnalyzer.Wildlife {
             });
         }
 
-        private void sort(string column) {
+        private void changeSort(string column) {
             if (column == sortColumn) {
-                if (SortDirections.TryGetValue(column, out ListSortDirection dir)) {
+                if (sortDirections.TryGetValue(column, out ListSortDirection dir)) {
                     if (dir == ListSortDirection.Ascending) {
-                        SortDirections[column] = ListSortDirection.Descending;
+                        sortDirections[column] = ListSortDirection.Descending;
                     } else if (dir == ListSortDirection.Descending) {
-                        SortDirections.Remove(column);
+                        sortDirections.Remove(column);
                     }
                 } else {
-                    SortDirections[column] = ListSortDirection.Ascending;
+                    sortDirections[column] = ListSortDirection.Ascending;
                 }
             } else {
                 sortColumn = column;
-                SortDirections[column] = ListSortDirection.Ascending;
+                sortDirections[column] = ListSortDirection.Ascending;
+            }
+
+            sort();
+        }
+
+        private void sort() {
+            if (string.IsNullOrEmpty(sortColumn)) {
+                return;
             }
 
             List<GameObject> sortedObjects = Objects.ToList();
@@ -155,16 +180,16 @@ namespace ArkSaveAnalyzer.Wildlife {
                 return cmp;
             }
 
-            if (SortDirections.TryGetValue(sortColumn, out ListSortDirection dir)) {
+            if (sortDirections.TryGetValue(sortColumn, out ListSortDirection dir)) {
                 if (cmp != 0) {
                     return dir == ListSortDirection.Ascending ? cmp : -cmp;
                 }
             }
 
-            foreach (KeyValuePair<string, ListSortDirection> sortDirection in SortDirections) {
+            foreach (KeyValuePair<string, ListSortDirection> sortDirection in sortDirections) {
                 if (sortDirection.Key == sortColumn)
                     continue;
-                if (SortDirections.TryGetValue(sortDirection.Key, out dir)) {
+                if (sortDirections.TryGetValue(sortDirection.Key, out dir)) {
                     cmp = comparison(a, b, sortDirection.Key);
                     if (cmp != 0) {
                         return dir == ListSortDirection.Ascending ? cmp : -cmp;
@@ -184,10 +209,24 @@ namespace ArkSaveAnalyzer.Wildlife {
         private void exclude() {
             if (SelectedObject == null)
                 return;
-            Messenger.Default.Send(new ExcludeWildlifeMessage(SelectedObject.GetNameForCreature(arkData)));
-            loadContent(CurrentMapName);
+            Messenger.Default.Send(new WildlifeExcludeMessage(SelectedObject.GetNameForCreature(arkData)));
+            loadAndSortCurrentMap();
         }
 
+        private void addToWishList() {
+            if (SelectedObject == null)
+                return;
+            Messenger.Default.Send(new WildlifeWishListMessage(SelectedObject.GetNameForCreature(arkData)));
+            loadAndSortCurrentMap();
+        }
+
+        private void loadAndSortCurrentMap() {
+            if (string.IsNullOrEmpty(CurrentMapName)) {
+                return;
+            }
+            loadContent(CurrentMapName);
+            sort();
+        }
 
         private async void loadContent(string mapName, bool getCached = true) {
             CurrentMapName = mapName;
@@ -234,12 +273,18 @@ namespace ArkSaveAnalyzer.Wildlife {
                     }
                 }
 
+                if (ApplyWishList) {
+                    string[] wishListWildlife = Settings.Default.WishListWildlife
+                            .Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries)
+                            .Where(s => !string.IsNullOrWhiteSpace(s)).ToArray();
+
+                    filteredObjects = filteredObjects.Where(o => wishListWildlife.Any(wish => Regex.IsMatch(o.GetNameForCreature(arkData), wish, RegexOptions.IgnoreCase)));
+                }
+
                 foreach (GameObject obj in filteredObjects) {
                     Objects.Add(obj);
                 }
 
-                sortColumn = null;
-                SortDirections.Clear();
             } catch (Exception e) {
                 MessageBox.Show(e.Message);
             }

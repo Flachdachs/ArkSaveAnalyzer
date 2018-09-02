@@ -1,9 +1,9 @@
 ﻿namespace ArkSaveAnalyzer.Infrastructure.Messages {
 
-    public class ExcludeWildlifeMessage {
+    public class WildlifeWishListMessage {
         public string Name { get; }
 
-        public ExcludeWildlifeMessage(string name) {
+        public WildlifeWishListMessage(string name) {
             Name = name;
         }
     }

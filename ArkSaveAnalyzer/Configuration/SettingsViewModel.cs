@@ -60,6 +60,22 @@ namespace ArkSaveAnalyzer.Configuration {
 
         #endregion
 
+        #region WishListWildlife
+
+        private string wishListWildlife;
+
+        public string WishListWildlife {
+            get => wishListWildlife;
+            set {
+                if (Set(ref wishListWildlife, value)) {
+                    Settings.Default.WishListWildlife = wishListWildlife;
+                    Settings.Default.Save();
+                }
+            }
+        }
+
+        #endregion
+
         public RelayCommand ChooseSavedFolder { get; }
         public RelayCommand ChooseWorkingDirectory { get; }
         public RelayCommand UpdateCommand { get; }
@@ -72,11 +88,13 @@ namespace ArkSaveAnalyzer.Configuration {
             ArkSavedFolder = Settings.Default.ArkSavedDirectory;
             WorkingDirectory = Settings.Default.WorkingDirectory;
             ExcludedWildlife = Settings.Default.ExcludedWildlife;
+            WishListWildlife = Settings.Default.WishListWildlife;
 
-            Messenger.Default.Register<ExcludeWildlifeMessage>(this, message => handleExcludedWildlife(message.Name));
+            Messenger.Default.Register<WildlifeExcludeMessage>(this, message => handleWildlifeExclude(message.Name));
+            Messenger.Default.Register<WildlifeWishListMessage>(this, message => handleWildlifeWishList(message.Name));
         }
 
-        private void handleExcludedWildlife(string name) {
+        private void handleWildlifeExclude(string name) {
             List<string> excluded = ExcludedWildlife
                     .Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries)
                     .Where(s => !string.IsNullOrWhiteSpace(s)).ToList();
@@ -85,6 +103,17 @@ namespace ArkSaveAnalyzer.Configuration {
             excluded.Add(name);
             excluded.Sort(StringComparer.InvariantCulture);
             ExcludedWildlife = string.Join(Environment.NewLine, excluded);
+        }
+
+        private void handleWildlifeWishList(string name) {
+            List<string> wishList = WishListWildlife
+                    .Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries)
+                    .Where(s => !string.IsNullOrWhiteSpace(s)).ToList();
+            if (wishList.Contains(name, StringComparer.InvariantCultureIgnoreCase))
+                return;
+            wishList.Add(name);
+            wishList.Sort(StringComparer.InvariantCulture);
+            WishListWildlife = string.Join(Environment.NewLine, wishList);
         }
 
         private void chooseSavedFolder() {

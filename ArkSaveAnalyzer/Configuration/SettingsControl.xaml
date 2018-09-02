@@ -28,6 +28,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
@@ -55,6 +56,13 @@
             <TextBlock Margin="5 0 5 5">RegExp for names</TextBlock>
         </StackPanel>
         <TextBox x:Name="ExcludedWildlife" Grid.Row="3" Grid.Column="1" Text="{Binding ExcludedWildlife}" AcceptsReturn="True" 
+                VerticalAlignment="Stretch" Margin="0 5 0 10" VerticalScrollBarVisibility="Auto" />
+
+        <StackPanel Orientation="Vertical" Grid.Row="4" Grid.Column="0">
+            <Label Content="Wildlife wish list" Target="{Binding ElementName=WishListWildlife}" VerticalAlignment="Top" />
+            <TextBlock Margin="5 0 5 5">RegExp for names</TextBlock>
+        </StackPanel>
+        <TextBox x:Name="WishListWildlife" Grid.Row="4" Grid.Column="1" Text="{Binding WishListWildlife}" AcceptsReturn="True" 
                 VerticalAlignment="Stretch" Margin="0 5 0 10" VerticalScrollBarVisibility="Auto" />
     </Grid>
 </UserControl>

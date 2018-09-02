@@ -70,5 +70,17 @@ namespace ArkSaveAnalyzer.Properties {
                 this["PinScale"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string WishListWildlife {
+            get {
+                return ((string)(this["WishListWildlife"]));
+            }
+            set {
+                this["WishListWildlife"] = value;
+            }
+        }
     }
 }
