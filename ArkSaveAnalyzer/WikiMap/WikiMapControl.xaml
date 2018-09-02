@@ -4,8 +4,89 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:wikiMap="clr-namespace:ArkSaveAnalyzer.WikiMap"
+        xmlns:converters="clr-namespace:ArkSaveAnalyzer.WikiMap.Converters"
+        xmlns:properties="clr-namespace:ArkSaveAnalyzer.Properties"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:command="http://www.galasoft.ch/mvvmlight"
         d:DesignHeight="150" d:DesignWidth="800"
         DataContext="{Binding WikiMap,Source={StaticResource Locator}}">
+    <UserControl.Resources>
+        <converters:MapPositionConverterX x:Key="MapPositionX" />
+        <converters:MapPositionConverterY x:Key="MapPositionY" />
+        <converters:CreatureTooltipConverter x:Key="CreatureTooltip" />
+        <DataTemplate x:Key="MapPinTemplate" DataType="{x:Type wikiMap:CreatureViewModel}">
+            <DataTemplate.Resources>
+                <Storyboard x:Key="PinHighlightAnimation" Storyboard.TargetName="scale" Duration="0:0:0.2">
+                    <DoubleAnimation Storyboard.TargetProperty="ScaleX" To="3" AutoReverse="True">
+                        <DoubleAnimation.EasingFunction>
+                            <QuinticEase EasingMode="EaseOut"/>
+                        </DoubleAnimation.EasingFunction>
+                    </DoubleAnimation>
+                    <DoubleAnimation Storyboard.TargetProperty="ScaleY" To="3" AutoReverse="True">
+                        <DoubleAnimation.EasingFunction>
+                            <QuinticEase EasingMode="EaseOut"/>
+                        </DoubleAnimation.EasingFunction>
+                    </DoubleAnimation>
+                    <ColorAnimation Storyboard.TargetName="stroke" Storyboard.TargetProperty="Color" To="LightGoldenrodYellow"/>
+                </Storyboard>
+            </DataTemplate.Resources>
+            <Grid>
+                <Grid.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform CenterX="0.5" CenterY="0.5" 
+                                ScaleX="{Binding PinScale,Source={x:Static properties:Settings.Default}}" 
+                                ScaleY="{Binding PinScale,Source={x:Static properties:Settings.Default}}" />
+                        <ScaleTransform x:Name="scale" CenterX="0.5" CenterY="0.5" ScaleX="1" ScaleY="1" />
+                        <TranslateTransform>
+                            <TranslateTransform.X>
+                                <MultiBinding Converter="{StaticResource MapPositionX}">
+                                    <Binding Path="Creature" />
+                                    <Binding Path="DataContext.MapData" RelativeSource="{RelativeSource FindAncestor,AncestorType=ItemsControl}" />
+                                    <Binding Path="DataContext.MapBoundary" RelativeSource="{RelativeSource FindAncestor,AncestorType=ItemsControl}" />
+                                </MultiBinding>
+                            </TranslateTransform.X>
+                            <TranslateTransform.Y>
+                                <MultiBinding Converter="{StaticResource MapPositionY}">
+                                    <Binding Path="Creature" />
+                                    <Binding Path="DataContext.MapData" RelativeSource="{RelativeSource FindAncestor,AncestorType=ItemsControl}" />
+                                    <Binding Path="DataContext.MapBoundary" RelativeSource="{RelativeSource FindAncestor,AncestorType=ItemsControl}" />
+                                </MultiBinding>
+                            </TranslateTransform.Y>
+                        </TranslateTransform>
+                    </TransformGroup>
+                </Grid.RenderTransform>
+                <Ellipse Width="2" Height="2" RenderTransformOrigin="0.5,0.5" Margin="-1" Fill="Crimson"/>
+                <Ellipse x:Name="rect" Width="30" Height="30" StrokeThickness="5" Margin="-15" RenderTransformOrigin="0.5,0.5"
+                       Fill="Transparent" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <Ellipse.ToolTip>
+                        <MultiBinding Converter="{StaticResource CreatureTooltip}">
+                            <Binding Path="Creature" />
+                            <Binding Path="DataContext.MapData" RelativeSource="{RelativeSource FindAncestor,AncestorType=ItemsControl}" />
+                        </MultiBinding>
+                    </Ellipse.ToolTip>
+                    <Ellipse.Stroke>
+                        <SolidColorBrush x:Name="stroke" Color="{Binding Color}"/>
+                    </Ellipse.Stroke>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseDown">
+                            <command:EventToCommand Command="{Binding Path=DataContext.PinCommand, RelativeSource={RelativeSource FindAncestor,AncestorType=ItemsControl}}" PassEventArgsToCommand="True"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Ellipse>
+            </Grid>
+            <DataTemplate.Triggers>
+                <DataTrigger Binding="{Binding Marked}" Value="True">
+                    <DataTrigger.EnterActions>
+                        <BeginStoryboard x:Name="highlightStoryboard" Storyboard="{StaticResource PinHighlightAnimation}"/>
+                    </DataTrigger.EnterActions>
+                    <DataTrigger.ExitActions>
+                        <StopStoryboard BeginStoryboardName="highlightStoryboard"/>
+                    </DataTrigger.ExitActions>
+                </DataTrigger>
+            </DataTemplate.Triggers>
+        </DataTemplate>
+
+    </UserControl.Resources>
     <DockPanel>
         <DockPanel DockPanel.Dock="Top" Background="White" IsEnabled="{Binding UiEnabled}">
             <DockPanel.Resources>
@@ -20,10 +101,23 @@
             <RadioButton Content="The Center" Command="{Binding MapCommand}" CommandParameter="TheCenter" />
             <RadioButton Content="Ragnarok" Command="{Binding MapCommand}" CommandParameter="Ragnarok" />
             <RadioButton Content="Open File" Command="{Binding OpenFileCommand}" />
-            <Button Content="Copy" HorizontalAlignment="Right" Command="{Binding CopyCommand}" Padding="5 1" Margin="3" />
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Content="Artistic / Topographic" Command="{Binding MapStyleCommand}" Padding="5 1" Margin="3" />
+                <Button Content="Copy" Command="{Binding CopyCommand}" Padding="5 1" Margin="3" />
+            </StackPanel>
         </DockPanel>
 
         <TabControl>
+            <TabItem Header="Map">
+                <Viewbox MaxWidth="1024" MaxHeight="1024" Stretch="Uniform" >
+                    <Grid>
+                        <Image Source="{Binding MapImage}" Width="1024" Height="1024" />
+                        <Canvas>
+                            <ItemsControl ItemTemplate="{StaticResource MapPinTemplate}" ItemsSource="{Binding Creatures}" />
+                        </Canvas>
+                    </Grid>
+                </Viewbox>
+            </TabItem>
             <TabItem Header="Tames">
                 <ListView ItemsSource="{Binding MapLinesTames}">
                     <ListView.ItemTemplate>

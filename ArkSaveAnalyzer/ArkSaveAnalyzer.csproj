@@ -75,6 +75,9 @@
     <Compile Include="Infrastructure\ArkDataService.cs" />
     <Compile Include="Infrastructure\Messages\InvalidateMapDataMessage.cs" />
     <Compile Include="Infrastructure\Messages\ShowGameObjectMessage.cs" />
+    <Compile Include="WikiMap\Converters\CreatureTooltipConverter.cs" />
+    <Compile Include="WikiMap\Converters\MapPositionConverter.cs" />
+    <Compile Include="WikiMap\CreatureViewModel.cs" />
     <Compile Include="WikiMap\MapLine.cs" />
     <Compile Include="WikiMap\WikiMapControl.xaml.cs">
       <DependentUpon>WikiMapControl.xaml</DependentUpon>
@@ -164,7 +167,7 @@
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
+      <Generator>PublicSettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
@@ -180,6 +183,28 @@
       <Project>{6213333f-9e44-4f8d-a37f-3a5f495b9b08}</Project>
       <Name>SavegameToolkit</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="assets\Aberration_Topographic.jpg" />
+    <Resource Include="assets\Ragnarok_Topographic.jpg" />
+    <Resource Include="assets\ScorchedEarth_Topographic.jpg" />
+    <Resource Include="assets\TheCenter_Topographic.jpg" />
+    <Resource Include="assets\TheIsland_Topographic.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="assets\Aberration.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="assets\Ragnarok.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="assets\ScorchedEarth.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="assets\TheCenter.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="assets\TheIsland.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
