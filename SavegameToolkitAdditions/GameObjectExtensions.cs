@@ -53,11 +53,20 @@ namespace SavegameToolkitAdditions {
             return statusComponent?.GetPropertyValue<int>("BaseCharacterLevel") ?? 0;
         }
 
+        public static int GetFullLevel(this GameObject gameObject) {
+            GameObject statusComponent = gameObject.CharacterStatusComponent();
+            return getFullLevel(statusComponent);
+        }
+
         public static int GetFullLevel(this GameObject gameObject, GameObjectContainer saveFile) {
             ObjectReference objectReference = gameObject.GetPropertyValue<ObjectReference>("MyCharacterStatusComponent");
 
             GameObject statusComponent = objectReference != null ? saveFile[objectReference] : null;
 
+            return getFullLevel(statusComponent);
+        }
+
+        private static int getFullLevel(GameObject statusComponent) {
             if (statusComponent == null) {
                 return 1;
             }
