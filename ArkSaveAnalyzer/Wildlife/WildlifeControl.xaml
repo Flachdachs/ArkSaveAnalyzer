@@ -25,16 +25,18 @@
             <RadioButton Content="The Island" Command="{Binding ContentCommand}" CommandParameter="TheIsland" />
             <RadioButton Content="Scorched Earth" Command="{Binding ContentCommand}" CommandParameter="ScorchedEarth" IsEnabled="{Binding UiEnabled}" />
             <RadioButton Content="Aberration" Command="{Binding ContentCommand}" CommandParameter="Aberration" IsEnabled="{Binding UiEnabled}" />
+            <RadioButton Content="Extinction" Command="{Binding ContentCommand}" CommandParameter="Extinction" IsEnabled="{Binding UiEnabled}" />
             <RadioButton Content="The Center" Command="{Binding ContentCommand}" CommandParameter="TheCenter" IsEnabled="{Binding UiEnabled}" />
             <RadioButton Content="Ragnarok" Command="{Binding ContentCommand}" CommandParameter="Ragnarok" IsEnabled="{Binding UiEnabled}" />
 
             <Label Content="Level:" Target="{Binding ElementName=Level}" />
-            <TextBox x:Name="Level" Width="70" Text="{Binding FilterLevel,UpdateSourceTrigger=PropertyChanged,Delay=1000}" VerticalAlignment="Center" IsEnabled="{Binding UiEnabled}" />
+            <TextBox x:Name="Level" Width="40" Text="{Binding FilterLevel,UpdateSourceTrigger=PropertyChanged,Delay=1000}" VerticalAlignment="Center" IsEnabled="{Binding UiEnabled}" />
 
-            <Label Content="Name Filter:" Target="{Binding ElementName=Filter}" />
-            <TextBox x:Name="Filter" Width="150" Text="{Binding FilterText,UpdateSourceTrigger=PropertyChanged,Delay=1000}" VerticalAlignment="Center" IsEnabled="{Binding UiEnabled}" />
+            <Label Content="Name filter:" Target="{Binding ElementName=Filter}" />
+            <TextBox x:Name="Filter" Width="70" Text="{Binding FilterText,UpdateSourceTrigger=PropertyChanged,Delay=1000}" VerticalAlignment="Center" IsEnabled="{Binding UiEnabled}" />
 
-            <CheckBox Content="Apply Wish List" IsChecked="{Binding ApplyWishList}" VerticalAlignment="Center" IsEnabled="{Binding UiEnabled}" Margin="5 0 0 0" />
+            <CheckBox Content="Apply wish list" IsChecked="{Binding ApplyWishList}" VerticalAlignment="Center" IsEnabled="{Binding UiEnabled}" Margin="5 0 0 0" />
+            <CheckBox Content="Auto reload" IsChecked="{Binding AutoReload}" VerticalAlignment="Center" IsEnabled="{Binding UiEnabled}" Margin="10 0 0 0" />
         </StackPanel>
 
         <ListView x:Name="ListView" ItemsSource="{Binding Objects}" SelectedItem="{Binding SelectedObject}">

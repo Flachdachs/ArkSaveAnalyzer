@@ -20,7 +20,7 @@ namespace ArkSaveAnalyzer.Wildlife.Converters {
 
             LocationData location = gameObject.Location;
 
-            return $"{location.X / mapData.LatDiv + mapData.LatShift:F2} {location.Y / mapData.LonDiv + mapData.LonShift:F2}";
+            return $"{location.Y / mapData.LatDiv + mapData.LatShift:F2} {location.X / mapData.LonDiv + mapData.LonShift:F2}";
         }
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture) {

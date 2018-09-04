@@ -86,6 +86,22 @@ namespace ArkSaveAnalyzer.Wildlife {
 
         #endregion
 
+        #region AutoReload
+
+
+        private bool autoReload;
+
+        public bool AutoReload {
+            get => autoReload;
+            set {
+                if (Set(ref autoReload, value)) {
+                    Messenger.Default.Send(new FileSystemWatchMessage(value ? CurrentMapName : null));
+                }
+            }
+        }
+
+        #endregion
+
         #region UiEnabled
 
         private bool uiEnabled = true;
@@ -109,7 +125,10 @@ namespace ArkSaveAnalyzer.Wildlife {
         #endregion
 
         public WildlifeViewModel() {
-            ContentCommand = new RelayCommand<string>(mapName => loadContent(mapName, false), s => UiEnabled);
+            ContentCommand = new RelayCommand<string>(mapName => {
+                loadContent(mapName, false);
+                Messenger.Default.Send(new FileSystemWatchMessage(AutoReload ? mapName : null));
+            }, s => UiEnabled);
             ShowDataCommand = new RelayCommand(showData, () => UiEnabled);
             SortCommand = new RelayCommand<string>(changeSort, s => UiEnabled);
             ExcludeCommand = new RelayCommand(exclude, () => UiEnabled);
@@ -123,6 +142,12 @@ namespace ArkSaveAnalyzer.Wildlife {
                         //Objects.Clear();
                     }
                 });
+            });
+
+            Messenger.Default.Register<FileSystemWatchChangedMessage>(this, message => {
+                if (AutoReload && message.MapName == CurrentMapName) {
+                    loadContent(message.MapName, false);
+                }
             });
         }
 
@@ -140,14 +165,6 @@ namespace ArkSaveAnalyzer.Wildlife {
             } else {
                 sortColumn = column;
                 sortDirections[column] = ListSortDirection.Ascending;
-            }
-
-            sort();
-        }
-
-        private void sort() {
-            if (string.IsNullOrEmpty(sortColumn)) {
-                return;
             }
 
             List<GameObject> sortedObjects = Objects.ToList();
@@ -217,7 +234,6 @@ namespace ArkSaveAnalyzer.Wildlife {
             if (SelectedObject == null)
                 return;
             Messenger.Default.Send(new WildlifeWishListMessage(SelectedObject.GetNameForCreature(arkData)));
-            loadAndSortCurrentMap();
         }
 
         private void loadAndSortCurrentMap() {
@@ -225,7 +241,6 @@ namespace ArkSaveAnalyzer.Wildlife {
                 return;
             }
             loadContent(CurrentMapName);
-            sort();
         }
 
         private async void loadContent(string mapName, bool getCached = true) {

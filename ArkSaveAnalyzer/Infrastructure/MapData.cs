@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Windows;
 
@@ -39,6 +40,11 @@ namespace ArkSaveAnalyzer.Infrastructure {
             return string.IsNullOrWhiteSpace(mapName) ? mapData.First().Value : mapData[mapName];
         }
 
+        public static string GetMapName(string filename) {
+            string mapFilename = Path.GetFileNameWithoutExtension(filename);
+            return mapData.FirstOrDefault(pair => pair.Value.Name == mapFilename).Key;
+        }
+
         public double CalculateLat(float y) {
             return LatShift + y / LatDiv;
         }
@@ -46,7 +52,6 @@ namespace ArkSaveAnalyzer.Infrastructure {
         public double CalculateLon(float x) {
             return LonShift + x / LonDiv;
         }
-
     }
 
 }

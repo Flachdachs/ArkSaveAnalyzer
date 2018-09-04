@@ -4,11 +4,60 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Threading;
+using ArkSaveAnalyzer.Infrastructure.Messages;
 using ArkSaveAnalyzer.Properties;
+using GalaSoft.MvvmLight.Messaging;
 using SavegameToolkit;
 
 namespace ArkSaveAnalyzer.Infrastructure {
-    public static class SavegameService {
+    public class SavegameService {
+
+        #region file system watch
+
+        private static readonly SavegameService instance = new SavegameService();
+
+        private readonly FileSystemWatcher fileSystemWatcher = new FileSystemWatcher();
+        private readonly DispatcherTimer reloadDelay;
+
+        private SavegameService() {
+            reloadDelay = new DispatcherTimer {
+                    Interval = TimeSpan.FromSeconds(2)
+            };
+            reloadDelay.Tick += (o, args) => {
+                reloadDelay.Stop();
+                Messenger.Default.Send(new FileSystemWatchChangedMessage(MapData.GetMapName(Path.GetFileNameWithoutExtension((string)reloadDelay.Tag))));
+            };
+
+            fileSystemWatcher.Changed += (o, args) => fileChanged(args.Name);
+            fileSystemWatcher.Renamed += (o, args) => fileChanged(args.Name);
+
+            Messenger.Default.Register<FileSystemWatchMessage>(this, message => {
+                fileSystemWatcher.EnableRaisingEvents = false;
+                if (string.IsNullOrEmpty(message.MapName)) {
+                    return;
+                }
+
+                string mapFilename = buildMapFilename(message.MapName);
+                fileSystemWatcher.Path = Path.GetDirectoryName(mapFilename);
+                fileSystemWatcher.Filter = "*" + Path.GetExtension(mapFilename);
+                fileSystemWatcher.NotifyFilter = NotifyFilters.FileName | NotifyFilters.LastWrite;
+                fileSystemWatcher.EnableRaisingEvents = true;
+            });
+        }
+
+        /// <summary>
+        /// Delay to prevent multiple calls at once
+        /// </summary>
+        /// <param name="filename"></param>
+        private void fileChanged(string filename) {
+            reloadDelay.Stop();
+            reloadDelay.Tag = filename;
+            reloadDelay.Start();
+        }
+
+        #endregion
+
         #region GameObjects
 
         // mapName => SaveJsonObjects
@@ -44,14 +93,14 @@ namespace ArkSaveAnalyzer.Infrastructure {
         #endregion
 
         private static Task<GameObjectContainer> getMapObjects(string mapName) {
-            copyMap(mapName, null, MapData.For(mapName));
+            File.Copy(buildMapFilename(mapName), $@"{workingDir}\{mapName}.ark", true);
 
             return readSavegameMap(mapName);
         }
 
-        private static void copyMap(string mapName, string fileName, MapData mapData) {
-            File.Copy(fileName ?? $@"{Settings.Default.ArkSavedDirectory}\{mapData.Directory}SavedArksLocal\{mapData.Name}.ark",
-                $@"{workingDir}\{mapName}.ark", true);
+        private static string buildMapFilename(string mapName) {
+            MapData mapData = MapData.For(mapName);
+            return $@"{Settings.Default.ArkSavedDirectory}\{mapData.Directory}SavedArksLocal\{mapData.Name}.ark";
         }
 
         private static Task<GameObjectContainer> readSavegameMap(string mapName) {

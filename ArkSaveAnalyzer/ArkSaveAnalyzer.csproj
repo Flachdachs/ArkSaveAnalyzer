@@ -73,6 +73,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Infrastructure\ArkDataService.cs" />
+    <Compile Include="Infrastructure\Messages\FileSystemWatchChangedMessage.cs" />
     <Compile Include="Infrastructure\Messages\InvalidateMapDataMessage.cs" />
     <Compile Include="Infrastructure\Messages\ShowGameObjectMessage.cs" />
     <Compile Include="WikiMap\Converters\CreatureTooltipConverter.cs" />
@@ -111,6 +112,7 @@
     <Compile Include="ViewModelLocator.cs" />
     <Compile Include="Wildlife\Converters\GameObjectToLocationConverter.cs" />
     <Compile Include="Infrastructure\Messages\WildlifeExcludeMessage.cs" />
+    <Compile Include="Infrastructure\Messages\FileSystemWatchMessage.cs" />
     <Compile Include="Wildlife\WildlifeControl.xaml.cs">
       <DependentUpon>WildlifeControl.xaml</DependentUpon>
     </Compile>
