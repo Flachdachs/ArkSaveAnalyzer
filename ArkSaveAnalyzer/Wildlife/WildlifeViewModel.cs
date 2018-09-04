@@ -281,10 +281,15 @@ namespace ArkSaveAnalyzer.Wildlife {
                     filteredObjects = filteredObjects.Where(o => wishListWildlife.Any(wish => Regex.IsMatch(o.GetNameForCreature(arkData), wish, RegexOptions.IgnoreCase)));
                 }
 
-                foreach (GameObject obj in filteredObjects) {
-                    Objects.Add(obj);
+                List<GameObject> objectsList = filteredObjects.ToList();
+                if (!string.IsNullOrEmpty(sortColumn)) {
+                    objectsList.Sort((a, b) => comparison(a, b));
                 }
 
+                Objects.Clear();
+                foreach (GameObject obj in objectsList) {
+                    Objects.Add(obj);
+                }
             } catch (Exception e) {
                 MessageBox.Show(e.Message);
             }
