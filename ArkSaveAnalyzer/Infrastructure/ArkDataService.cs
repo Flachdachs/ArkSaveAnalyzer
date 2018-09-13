@@ -10,7 +10,7 @@ namespace ArkSaveAnalyzer.Infrastructure {
     public static class ArkDataService {
         private const string userAgent = "ark-save-analyzer";
         private const string arkDataFilename = "ark_data.json";
-        private const string arkDataUrl = "https://ark-tools.seen-von-ragan.de/data-download/" + arkDataFilename;
+        private const string arkDataUrl = "http://ark-tools.seen-von-ragan.de/data-download/" + arkDataFilename;
 
         private static ArkData arkData;
         private static string filename => Path.Combine(

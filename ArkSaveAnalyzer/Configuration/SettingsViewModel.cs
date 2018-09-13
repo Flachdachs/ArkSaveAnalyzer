@@ -85,10 +85,12 @@ namespace ArkSaveAnalyzer.Configuration {
             ChooseWorkingDirectory = new RelayCommand(chooseWorkingDirectory);
             UpdateCommand = new RelayCommand(update);
 
-            ArkSavedFolder = Settings.Default.ArkSavedDirectory;
-            WorkingDirectory = Settings.Default.WorkingDirectory;
-            ExcludedWildlife = Settings.Default.ExcludedWildlife;
-            WishListWildlife = Settings.Default.WishListWildlife;
+            if (!IsInDesignMode) {
+                ArkSavedFolder = Settings.Default.ArkSavedDirectory;
+                WorkingDirectory = Settings.Default.WorkingDirectory;
+                ExcludedWildlife = Settings.Default.ExcludedWildlife;
+                WishListWildlife = Settings.Default.WishListWildlife;
+            }
 
             Messenger.Default.Register<WildlifeExcludeMessage>(this, message => handleWildlifeExclude(message.Name));
             Messenger.Default.Register<WildlifeWishListMessage>(this, message => handleWildlifeWishList(message.Name));

@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Windows;
 using ArkSaveAnalyzer.Infrastructure;
 using ArkSaveAnalyzer.Infrastructure.Messages;
@@ -20,7 +21,7 @@ namespace ArkSaveAnalyzer.Wildlife {
         private string sortColumn;
         private readonly Dictionary<string, ListSortDirection> sortDirections = new Dictionary<string, ListSortDirection>();
 
-        private readonly ArkData arkData;
+        private ArkData arkData;
 
         public RelayCommand<string> ContentCommand { get; }
         public RelayCommand ShowDataCommand { get; }
@@ -134,7 +135,11 @@ namespace ArkSaveAnalyzer.Wildlife {
             ExcludeCommand = new RelayCommand(exclude, () => UiEnabled);
             WishListCommand = new RelayCommand(addToWishList, () => UiEnabled);
 
-            arkData = ArkDataService.GetArkData().Result;
+            if (!IsInDesignMode) {
+                Task.Run(async () => {
+                    arkData = await ArkDataService.GetArkData(); 
+                });
+            }
 
             Messenger.Default.Register<InvalidateMapDataMessage>(this, message => {
                 Application.Current.Dispatcher.Invoke(() => {
