@@ -1,0 +1,44 @@
+﻿<UserControl x:Class="ArkSaveAnalyzer.Maps.MapStructuresListControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:maps="clr-namespace:ArkSaveAnalyzer.Maps"
+             xmlns:infrastructure="clr-namespace:ArkSaveAnalyzer.Infrastructure"
+             xmlns:converters="clr-namespace:ArkSaveAnalyzer.Infrastructure.Converters"
+             d:DesignHeight="100" d:DesignWidth="800" d:DataContext="{d:DesignInstance Type=maps:MapViewModel,IsDesignTimeCreatable=False}">
+    <UserControl.Resources>
+        <converters:BooleanToTrueStringConverter x:Key="BooleanToTrueString" />
+    </UserControl.Resources>
+
+    <ListView x:Name="ListViewStructures" ItemsSource="{Binding Structures}" SelectedItem="{Binding SelectedStructures}">
+        <ListView.Resources>
+            <Style TargetType="{x:Type GridViewColumnHeader}">
+                <Setter Property="HorizontalContentAlignment" Value="Left" />
+            </Style>
+        </ListView.Resources>
+
+        <ListView.ItemContainerStyle>
+            <Style TargetType="ListViewItem">
+                <Setter Property="infrastructure:HandleDoubleClickBehavior.Command" Value="{Binding DataContext.ShowDataStructuresCommand,ElementName=ListViewStructures}" />
+                <Setter Property="infrastructure:HandleDoubleClickBehavior.CommandParameter" Value="{Binding DataContext.SelectedStructures,ElementName=ListViewStructures}" />
+            </Style>
+        </ListView.ItemContainerStyle>
+
+        <ListView.InputBindings>
+            <KeyBinding Key="Enter" Command="{Binding ShowDataStructuresCommand}" CommandParameter="{Binding SelectedStructures}" />
+        </ListView.InputBindings>
+
+        <ListView.View>
+            <GridView>
+                <GridViewColumn Header="Lat" Width="40" DisplayMemberBinding="{Binding Lat}" />
+                <GridViewColumn Header="Lon" Width="40" DisplayMemberBinding="{Binding Lon}" />
+
+                <GridViewColumn Header="Count" Width="40" DisplayMemberBinding="{Binding Count}" />
+                <GridViewColumn Header="Hidden" Width="50" DisplayMemberBinding="{Binding Hidden, Converter={StaticResource BooleanToTrueString}}" />
+
+                <GridViewColumn Header="Structure Names" Width="Auto" DisplayMemberBinding="{Binding UniqueStructureNames}" />
+            </GridView>
+        </ListView.View>
+    </ListView>
+</UserControl>

@@ -1,0 +1,48 @@
+﻿<UserControl x:Class="ArkSaveAnalyzer.Maps.MapControl"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:maps="clr-namespace:ArkSaveAnalyzer.Maps"
+        d:DesignHeight="150" d:DesignWidth="800"
+        DataContext="{Binding Map,Source={StaticResource Locator}}">
+    <UserControl.Resources>
+    </UserControl.Resources>
+    <DockPanel>
+        <DockPanel DockPanel.Dock="Top" Background="White" IsEnabled="{Binding UiEnabled}">
+            <DockPanel.Resources>
+                <Style TargetType="RadioButton">
+                    <Setter Property="Margin" Value="2 2 10 2" />
+                    <Setter Property="VerticalAlignment" Value="Center" />
+                </Style>
+            </DockPanel.Resources>
+            <RadioButton Content="The Island" Command="{Binding MapCommand}" CommandParameter="TheIsland" />
+            <RadioButton Content="Scorched Earth" Command="{Binding MapCommand}" CommandParameter="ScorchedEarth" />
+            <RadioButton Content="Aberration" Command="{Binding MapCommand}" CommandParameter="Aberration" />
+            <RadioButton Content="The Center" Command="{Binding MapCommand}" CommandParameter="TheCenter" />
+            <RadioButton Content="Ragnarok" Command="{Binding MapCommand}" CommandParameter="Ragnarok" />
+            <RadioButton Content="Open File" Command="{Binding OpenFileCommand}" />
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Content="Artistic / Topographic" Command="{Binding MapStyleCommand}" Padding="5 1" Margin="3" />
+            </StackPanel>
+        </DockPanel>
+
+        <TabControl>
+            <TabItem Header="Tames Map">
+                <maps:MapTamesControl DataContext="{Binding}" />
+            </TabItem>
+            
+            <TabItem Header="Tames List">
+                <maps:MapTamesListControl DataContext="{Binding}" />
+            </TabItem>
+
+            <TabItem Header="Structures Map">
+                <maps:MapStructuresControl DataContext="{Binding}" />
+            </TabItem>
+            
+            <TabItem Header="Structures List">
+                <maps:MapStructuresListControl DataContext="{Binding}" />
+            </TabItem>
+        </TabControl>
+    </DockPanel>
+</UserControl>

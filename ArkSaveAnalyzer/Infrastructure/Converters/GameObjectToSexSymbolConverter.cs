@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Globalization;
 using System.Windows.Data;
-using ArkSaveAnalyzer.Infrastructure;
 using SavegameToolkit;
-using SavegameToolkitAdditions;
 
-namespace ArkSaveAnalyzer.Wildlife.Converters {
+namespace ArkSaveAnalyzer.Infrastructure.Converters {
 
-    public class GameObjectToNameConverter : IValueConverter {
+    public class GameObjectToSexSymbolConverter : IValueConverter {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
             GameObject gameObject = (GameObject)value;
-            return gameObject.GetNameForCreature(ArkDataService.GetArkData().Result);
+            return gameObject.GetPropertyValue<bool>("bIsFemale") ? "♀" : "♂";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {

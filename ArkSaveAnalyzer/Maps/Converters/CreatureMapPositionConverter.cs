@@ -6,9 +6,9 @@ using System.Windows.Data;
 using ArkSaveAnalyzer.Infrastructure;
 using SavegameToolkit;
 
-namespace ArkSaveAnalyzer.WikiMap.Converters {
+namespace ArkSaveAnalyzer.Maps.Converters {
 
-    public class MapPositionConverterX : IMultiValueConverter {
+    public class CreatureMapPositionConverterX : IMultiValueConverter {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture) {
             try {
                 GameObject creature = (GameObject)values[0];
@@ -33,7 +33,7 @@ namespace ArkSaveAnalyzer.WikiMap.Converters {
         }
     }
 
-    public class MapPositionConverterY : IMultiValueConverter {
+    public class CreatureMapPositionConverterY : IMultiValueConverter {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture) {
             try {
                 GameObject creature = (GameObject)values[0];

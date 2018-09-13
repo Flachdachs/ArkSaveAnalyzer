@@ -1,0 +1,114 @@
+﻿<UserControl x:Class="ArkSaveAnalyzer.Maps.MapTamesListControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:maps="clr-namespace:ArkSaveAnalyzer.Maps"
+             xmlns:infrastructure="clr-namespace:ArkSaveAnalyzer.Infrastructure"
+             xmlns:savegameToolkit="clr-namespace:SavegameToolkit;assembly=SavegameToolkit"
+             xmlns:converters="clr-namespace:ArkSaveAnalyzer.Maps.Converters"
+             xmlns:infrastructureConverters="clr-namespace:ArkSaveAnalyzer.Infrastructure.Converters"
+             d:DesignHeight="100" d:DesignWidth="800" d:DataContext="{d:DesignInstance Type=maps:MapViewModel,IsDesignTimeCreatable=False}">
+    <UserControl.Resources>
+        <converters:CreatureToTamedNameConverter x:Key="TamedNameConverter" />
+        <converters:CreatureToTamerConverter x:Key="TamerConverter" />
+        <infrastructureConverters:GameObjectToCreatureNameConverter x:Key="NameConverter" />
+        <infrastructureConverters:GameObjectToLocationConverter x:Key="LocationConverter" />
+        <infrastructureConverters:GameObjectToLevelConverter x:Key="LevelConverter" />
+        <infrastructureConverters:GameObjectToSexSymbolConverter x:Key="SexConverter" />
+
+    </UserControl.Resources>
+    
+    <ListView x:Name="ListViewTames" ItemsSource="{Binding Tames}" SelectedItem="{Binding SelectedTame}">
+        <ListView.Resources>
+            <Style TargetType="{x:Type GridViewColumnHeader}">
+                <Setter Property="HorizontalContentAlignment" Value="Left" />
+            </Style>
+        </ListView.Resources>
+
+        <ListView.ItemContainerStyle>
+            <Style TargetType="ListViewItem">
+                <Setter Property="infrastructure:HandleDoubleClickBehavior.Command" Value="{Binding DataContext.ShowDataTameCommand,ElementName=ListViewTames}" />
+                <Setter Property="infrastructure:HandleDoubleClickBehavior.CommandParameter" Value="{Binding DataContext.SelectedTame,ElementName=ListViewTames}" />
+            </Style>
+        </ListView.ItemContainerStyle>
+
+        <ListView.InputBindings>
+            <KeyBinding Key="Enter" Command="{Binding ShowDataTameCommand}" CommandParameter="{Binding SelectedTame}" />
+        </ListView.InputBindings>
+
+        <ListView.View>
+            <GridView>
+                <GridViewColumn Width="80">
+                    <GridViewColumnHeader Content="Location" Command="{Binding SortCommand}" CommandParameter="{Binding Content,RelativeSource={RelativeSource Self}}" />
+                    <GridViewColumn.CellTemplate>
+                        <DataTemplate DataType="{x:Type savegameToolkit:GameObject}">
+                            <TextBlock>
+                                <TextBlock.Text>
+                                    <MultiBinding Converter="{StaticResource LocationConverter}">
+                                        <Binding />
+                                        <Binding Path="DataContext.MapData" RelativeSource="{RelativeSource Mode=FindAncestor,AncestorType=UserControl}" />
+                                    </MultiBinding>
+                                </TextBlock.Text>
+                            </TextBlock>
+                        </DataTemplate>
+                    </GridViewColumn.CellTemplate>
+                </GridViewColumn>
+
+                <GridViewColumn Width="70">
+                    <GridViewColumnHeader Content="Id" Command="{Binding SortCommand}" CommandParameter="{Binding Content,RelativeSource={RelativeSource Self}}" />
+                    <GridViewColumn.CellTemplate>
+                        <DataTemplate DataType="{x:Type savegameToolkit:GameObject}">
+                            <TextBlock Text="{Binding Id}" />
+                        </DataTemplate>
+                    </GridViewColumn.CellTemplate>
+                </GridViewColumn>
+
+                <GridViewColumn Width="Auto">
+                    <GridViewColumnHeader Content="Creature" Command="{Binding SortCommand}" CommandParameter="{Binding Content,RelativeSource={RelativeSource Self}}" />
+                    <GridViewColumn.CellTemplate>
+                        <DataTemplate DataType="{x:Type savegameToolkit:GameObject}">
+                            <TextBlock Text="{Binding Converter={StaticResource NameConverter}}" />
+                        </DataTemplate>
+                    </GridViewColumn.CellTemplate>
+                </GridViewColumn>
+
+                <GridViewColumn Width="Auto">
+                    <GridViewColumnHeader Content="Name" Command="{Binding SortCommand}" CommandParameter="{Binding Content,RelativeSource={RelativeSource Self}}" />
+                    <GridViewColumn.CellTemplate>
+                        <DataTemplate DataType="{x:Type savegameToolkit:GameObject}">
+                            <TextBlock Text="{Binding Converter={StaticResource TamedNameConverter}}" />
+                        </DataTemplate>
+                    </GridViewColumn.CellTemplate>
+                </GridViewColumn>
+
+                <GridViewColumn Width="Auto">
+                    <GridViewColumnHeader Content="Level" Command="{Binding SortCommand}" CommandParameter="{Binding Content,RelativeSource={RelativeSource Self}}" />
+                    <GridViewColumn.CellTemplate>
+                        <DataTemplate DataType="{x:Type savegameToolkit:GameObject}">
+                            <TextBlock Text="{Binding Converter={StaticResource LevelConverter}}" />
+                        </DataTemplate>
+                    </GridViewColumn.CellTemplate>
+                </GridViewColumn>
+
+                <GridViewColumn Width="Auto">
+                    <GridViewColumnHeader Content="Sex" Command="{Binding SortCommand}" CommandParameter="{Binding Content,RelativeSource={RelativeSource Self}}" />
+                    <GridViewColumn.CellTemplate>
+                        <DataTemplate DataType="{x:Type savegameToolkit:GameObject}">
+                            <TextBlock Text="{Binding Converter={StaticResource SexConverter}}" />
+                        </DataTemplate>
+                    </GridViewColumn.CellTemplate>
+                </GridViewColumn>
+
+                <GridViewColumn Width="Auto">
+                    <GridViewColumnHeader Content="Tamer" Command="{Binding SortCommand}" CommandParameter="{Binding Content,RelativeSource={RelativeSource Self}}" />
+                    <GridViewColumn.CellTemplate>
+                        <DataTemplate DataType="{x:Type savegameToolkit:GameObject}">
+                            <TextBlock Text="{Binding Converter={StaticResource TamerConverter}}" />
+                        </DataTemplate>
+                    </GridViewColumn.CellTemplate>
+                </GridViewColumn>
+            </GridView>
+        </ListView.View>
+    </ListView>
+</UserControl>

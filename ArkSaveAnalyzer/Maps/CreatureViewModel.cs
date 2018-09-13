@@ -2,8 +2,7 @@
 using GalaSoft.MvvmLight;
 using SavegameToolkit;
 
-namespace ArkSaveAnalyzer.WikiMap {
-
+namespace ArkSaveAnalyzer.Maps {
     public class CreatureViewModel : ViewModelBase {
         #region Creature
 
@@ -27,21 +26,9 @@ namespace ArkSaveAnalyzer.WikiMap {
 
         #endregion
 
-        #region Marked
-
-        private bool marked;
-
-        public bool Marked {
-            get => marked;
-            set => Set(ref marked, value);
-        }
-
-        #endregion
-
         public CreatureViewModel(GameObject creature) {
             this.creature = creature;
             Color = Colors.Crimson;
         }
     }
-
 }

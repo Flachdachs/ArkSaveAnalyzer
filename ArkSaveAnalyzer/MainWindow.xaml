@@ -6,8 +6,8 @@
         xmlns:savegame="clr-namespace:ArkSaveAnalyzer.Savegame"
         xmlns:configuration="clr-namespace:ArkSaveAnalyzer.Configuration"
         xmlns:wildlife="clr-namespace:ArkSaveAnalyzer.Wildlife"
-        xmlns:wikiMap="clr-namespace:ArkSaveAnalyzer.WikiMap"
-        Title="MainWindow" Height="1000" Width="1000" d:DesignHeight="350" d:DesignWidth="525"
+        xmlns:maps="clr-namespace:ArkSaveAnalyzer.Maps"
+        Title="ARK Save Analyzer" Height="1000" Width="1000" d:DesignHeight="350" d:DesignWidth="525"
         DataContext="{Binding Main,Source={StaticResource Locator}}">
     <TabControl DockPanel.Dock="Top">
         <TabItem Header="Content">
@@ -16,13 +16,12 @@
         <TabItem Header="Wildlife">
             <wildlife:WildlifeControl />
         </TabItem>
-        <TabItem Header="Wiki Map">
-            <wikiMap:WikiMapControl />
+        <TabItem Header="Maps">
+            <maps:MapControl />
         </TabItem>
         <TabItem Header="Settings">
             <configuration:SettingsControl />
         </TabItem>
-
 </TabControl>
 
 </Window>

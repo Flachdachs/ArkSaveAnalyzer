@@ -5,14 +5,14 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:infrastructure="clr-namespace:ArkSaveAnalyzer.Infrastructure"
         xmlns:savegameToolkit="clr-namespace:SavegameToolkit;assembly=SavegameToolkit"
-        xmlns:converters="clr-namespace:ArkSaveAnalyzer.Wildlife.Converters"
+        xmlns:converters="clr-namespace:ArkSaveAnalyzer.Infrastructure.Converters"
         d:DesignHeight="200" d:DesignWidth="1000"
         DataContext="{Binding Wildlife,Source={StaticResource Locator}}">
     <UserControl.Resources>
         <converters:GameObjectToSexSymbolConverter x:Key="SexSymbolConverter" />
         <converters:GameObjectToLevelConverter x:Key="LevelConverter" />
         <converters:GameObjectToLocationConverter x:Key="LocationConverter" />
-        <converters:GameObjectToNameConverter x:Key="NameConverter" />
+        <converters:GameObjectToCreatureNameConverter x:Key="NameConverter" />
     </UserControl.Resources>
     <DockPanel>
         <StackPanel DockPanel.Dock="Top" Background="White" Orientation="Horizontal" IsEnabled="{Binding UiEnabled}">

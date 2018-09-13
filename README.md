@@ -12,7 +12,7 @@ mostly a translation of Qowyn's [ark-savegame-toolkit](https://github.com/Qowyn/
 
 This is a library that actually reads the files of an ARK "Saved" folder. It also can write the content in Json format, can read the Json files and write back to binary files.
 
-However, reading Json is not fully implemented, writing binary is not tested at all and certainly contains some errors.
+However, reading Json is not fully implemented, writing binary is not tested at all and certainly contains some errors that break the savegame files.
 I also refactored some parts to better match the C# philosophy, or to be able to write C# code at all, or because I thought it is better structured in a different way.
 
 ### SavegameToolkitAdditions
@@ -45,15 +45,11 @@ However the files can be read nontheless, opening manual after selecting a map n
 The tabs do:
 * Content: list of all objects. Double click on a line will show its details.
 * Wildlife: list of wild creatures with sorting (click the column headers) and basic filtering. You can prepend the level number with < or >. Doubleclick a line for details.
-* WikiMap: Maybe not that usefull for you if you don't have a private installation of MediaWiki that has at least the templates to show maps 
-like the [Explorer Map](https://ark.gamepedia.com/Explorer_Map_\(The_Island\)). Future improvements planned. For now lists all tamed creatures (doubleclick works), 
-and unique pairs of coordinates where structures are placed (doubleclick does nothing). Some of them might be marked as hidden when the hiding feature of the S+ mod was used.
+* Map: Shows all tamed creatures and also player created structures on maps or as a list. The structures list shows only one line for each unique pair of coordinates where structures are placed (doubleclick to expand). Some of them might be marked as hidden when the hiding feature of the S+ mod was used.
 * Settings: self-explanatory, almost. There is no save button, it's self-saving when changed. 
-For "Excluded Wildlife" use case insensitive significant parts of the class name, or the full class name, or a regular expression like `^ant`
-to exclude Ants (i.e. Titanomyrma) but not Manta or Gigant (i.e. Giganotosaurus).
+For "Excluded Wildlife" use case insensitive significant parts of the creature name, or the full name, or a regular expression like `^ant` to exclude Ants (i.e. Titanomyrma) but not Manta or Gigant (i.e. Giganotosaurus).
 
 ## Thanks
 
 Thanks to Qowyn for his great work to analyze the binary format of the ARK savegame files and his Java version of ArkTools/SavegameToolkit.
-No thanks for the invention of the Java programming language. 90% of the translation was adjusting minor language differences, 9% was finding the equivalent C# expression,
-1% was figuring out how it can be done in C#. The time effort seemed to be the opposite.
+No thanks for the invention of the Java programming language. 90% of the translation was adjusting minor language differences, 9% was finding the equivalent C# expression, 1% was figuring out how it can be done in C#. The time effort seemed to be the opposite.

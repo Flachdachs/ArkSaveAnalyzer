@@ -73,21 +73,44 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Infrastructure\ArkDataService.cs" />
+    <Compile Include="Infrastructure\Converters\BooleanToTrueStringConverter.cs" />
+    <Compile Include="Infrastructure\Converters\GameObjectToStructureNameConverter.cs" />
     <Compile Include="Infrastructure\Messages\FileSystemWatchChangedMessage.cs" />
     <Compile Include="Infrastructure\Messages\InvalidateMapDataMessage.cs" />
+    <Compile Include="Infrastructure\Messages\ShowGameObjectListMessage.cs" />
     <Compile Include="Infrastructure\Messages\ShowGameObjectMessage.cs" />
-    <Compile Include="WikiMap\Converters\CreatureTooltipConverter.cs" />
-    <Compile Include="WikiMap\Converters\MapPositionConverter.cs" />
-    <Compile Include="WikiMap\CreatureViewModel.cs" />
-    <Compile Include="WikiMap\MapLine.cs" />
-    <Compile Include="WikiMap\WikiMapControl.xaml.cs">
-      <DependentUpon>WikiMapControl.xaml</DependentUpon>
+    <Compile Include="Maps\Converters\CreatureMapPositionConverter.cs" />
+    <Compile Include="Maps\Converters\CreatureTooltipConverter.cs" />
+    <Compile Include="Maps\Converters\CreatureToTamedNameConverter.cs" />
+    <Compile Include="Maps\Converters\CreatureToTamerConverter.cs" />
+    <Compile Include="Maps\Converters\StructuresMapPositionConverters.cs" />
+    <Compile Include="Maps\Converters\StructuresTooltipConverter.cs" />
+    <Compile Include="Maps\CreatureViewModel.cs" />
+    <Compile Include="Maps\MapControl.xaml.cs">
+      <DependentUpon>MapControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="WikiMap\WikiMapService.cs" />
-    <Compile Include="WikiMap\WikiMapViewModel.cs" />
-    <Compile Include="Wildlife\Converters\GameObjectToNameConverter.cs" />
-    <Compile Include="Wildlife\Converters\GameObjectToSexSymbolConverter.cs" />
-    <Compile Include="Wildlife\Converters\GameObjectToLevelConverter.cs" />
+    <Compile Include="Maps\MapStructuresControl.xaml.cs">
+      <DependentUpon>MapStructuresControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Maps\MapStructuresListControl.xaml.cs">
+      <DependentUpon>MapStructuresListControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Maps\MapTamesControl.xaml.cs">
+      <DependentUpon>MapTamesControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Maps\MapTamesListControl.xaml.cs">
+      <DependentUpon>MapTamesListControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Maps\StructuresViewModel.cs" />
+    <Compile Include="Maps\MapService.cs" />
+    <Compile Include="Maps\MapViewModel.cs" />
+    <Compile Include="Savegame\GameObjectListViewModel.cs" />
+    <Compile Include="Savegame\GameObjectListWindow.xaml.cs">
+      <DependentUpon>GameObjectListWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Infrastructure\Converters\GameObjectToCreatureNameConverter.cs" />
+    <Compile Include="Infrastructure\Converters\GameObjectToSexSymbolConverter.cs" />
+    <Compile Include="Infrastructure\Converters\GameObjectToLevelConverter.cs" />
     <Compile Include="Savegame\Converters\ArkNamesConverter.cs" />
     <Compile Include="Infrastructure\HandleDoubleClickBehavior.cs" />
     <Compile Include="Infrastructure\Messages\GotoIdMessage.cs" />
@@ -110,7 +133,7 @@
     <Compile Include="Savegame\Converters\SpecialTextConverter.cs" />
     <Compile Include="MainViewModel.cs" />
     <Compile Include="ViewModelLocator.cs" />
-    <Compile Include="Wildlife\Converters\GameObjectToLocationConverter.cs" />
+    <Compile Include="Infrastructure\Converters\GameObjectToLocationConverter.cs" />
     <Compile Include="Infrastructure\Messages\WildlifeExcludeMessage.cs" />
     <Compile Include="Infrastructure\Messages\FileSystemWatchMessage.cs" />
     <Compile Include="Wildlife\WildlifeControl.xaml.cs">
@@ -134,15 +157,35 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Maps\MapControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Maps\MapStructuresControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Maps\MapStructuresListControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Maps\MapTamesControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Maps\MapTamesListControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Savegame\GameObjectListWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Savegame\GameObjectWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Savegame\SavegameControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="WikiMap\WikiMapControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -210,5 +253,6 @@
   <ItemGroup>
     <Resource Include="assets\TheIsland.jpg" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

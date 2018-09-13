@@ -41,7 +41,7 @@
             </ListView.InputBindings>
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
-                    <Setter Property="infrastructure:HandleDoubleClickBehavior.Command" Value="{Binding DataContext.ShowDataCommand,ElementName=ListView}"></Setter>
+                    <Setter Property="infrastructure:HandleDoubleClickBehavior.Command" Value="{Binding DataContext.ShowDataCommand,ElementName=ListView}" />
                 </Style>
             </ListView.ItemContainerStyle>
             <ListView.Resources>

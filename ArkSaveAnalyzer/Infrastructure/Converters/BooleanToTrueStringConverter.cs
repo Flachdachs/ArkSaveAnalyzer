@@ -1,15 +1,12 @@
 using System;
 using System.Globalization;
 using System.Windows.Data;
-using SavegameToolkit;
-using SavegameToolkitAdditions;
 
-namespace ArkSaveAnalyzer.Wildlife.Converters {
+namespace ArkSaveAnalyzer.Infrastructure.Converters {
 
-    public class GameObjectToLevelConverter : IValueConverter {
+    public class BooleanToTrueStringConverter : IValueConverter {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
-            GameObject gameObject = (GameObject)value;
-            return gameObject.GetBaseLevel();
+            return value is bool b && b ? "true" : "";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {

@@ -38,6 +38,10 @@ namespace SavegameToolkitAdditions {
             return !teamType.IsTamed();
         }
 
+        public static bool IsDeathItemCache(this GameObject gameObject) {
+            return gameObject.ClassString == "DeathItemCache_C";
+        }
+
         public static GameObject CharacterStatusComponent(this GameObject gameObject) {
             return gameObject.Components.FirstOrDefault(component => component.Key.Name.StartsWith("DinoCharacterStatus_")).Value;
         }
@@ -78,6 +82,14 @@ namespace SavegameToolkitAdditions {
 
         public static string GetNameForCreature(this GameObject gameObject, ArkData arkData) {
             return arkData.GetCreatureForClass(gameObject.ClassString)?.Name;
+        }
+
+        public static string GetNameForStructure(this GameObject gameObject, ArkData arkData) {
+            return arkData.GetStructureForClass(gameObject.ClassString)?.Name;
+        }
+
+        public static string GetNameForItem(this GameObject gameObject, ArkData arkData) {
+            return arkData.GetItemForClass(gameObject.ClassString)?.Name;
         }
     }
 }
