@@ -11,8 +11,12 @@ namespace ArkSaveAnalyzer.Maps.Converters {
     public class CreatureMapPositionConverterX : IMultiValueConverter {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture) {
             try {
-                GameObject creature = (GameObject)values[0];
-                MapData mapData = (MapData)values[1];
+                if (!(values[0] is GameObject creature)) {
+                    return 0;
+                }
+                if (!(values[1] is MapData mapData)) {
+                    return 0;
+                }
                 Rect imageBoundaryGps = (Rect)values[2];
 
                 Rect imageBoundaryUe = new Rect(
@@ -36,8 +40,12 @@ namespace ArkSaveAnalyzer.Maps.Converters {
     public class CreatureMapPositionConverterY : IMultiValueConverter {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture) {
             try {
-                GameObject creature = (GameObject)values[0];
-                MapData mapData = (MapData)values[1];
+                if (!(values[0] is GameObject creature)) {
+                    return 0;
+                }
+                if (!(values[1] is MapData mapData)) {
+                    return 0;
+                }
                 Rect imageBoundaryGps = (Rect)values[2];
 
                 Rect imageBoundaryUe = new Rect(

@@ -42,7 +42,7 @@ namespace ArkSaveAnalyzer.Maps {
 
         public bool UiEnabled {
             get => uiEnabled;
-            set => Set(ref uiEnabled, value);
+            set => Set(ref uiEnabled, value, true);
         }
 
         #endregion
@@ -140,7 +140,7 @@ namespace ArkSaveAnalyzer.Maps {
         }
 
         private int comparison(GameObject a, GameObject b, string column = null) {
-            ArkData arkData = ArkDataService.GetArkData().Result;
+            ArkData arkData = ArkDataService.ArkData;
             int cmp = 0;
             switch (column ?? sortColumn) {
                 case "Location":
@@ -162,7 +162,7 @@ namespace ArkSaveAnalyzer.Maps {
                     cmp = a.GetBaseLevel() - b.GetBaseLevel();
                     break;
                 case "Sex":
-                    cmp = (a.GetPropertyValue<bool>("bIsFemale") ? 1 : 0) - (b.GetPropertyValue<bool>("bIsFemale") ? 1 : 0);
+                    cmp = (a.IsFemale() ? 1 : 0) - (b.IsFemale() ? 1 : 0);
                     break;
                 case "Tamer":
                     cmp = string.Compare(a.GetPropertyValue<string>("TamerString"), b.GetPropertyValue<string>("TamerString"), StringComparison.InvariantCulture);
@@ -222,7 +222,7 @@ namespace ArkSaveAnalyzer.Maps {
         private void showDataStructures(StructuresViewModel structuresViewModel) {
             if (structuresViewModel.Structures != null) {
                 Messenger.Default.Send(new ShowGameObjectListMessage(structuresViewModel.Structures, MapData,
-                    string.Format(CultureInfo.InvariantCulture,"{0:0.#} / {1:0.#}", structuresViewModel.Lat, structuresViewModel.Lon)));
+                        string.Format(CultureInfo.InvariantCulture, "{0:0.#} / {1:0.#}", structuresViewModel.Lat, structuresViewModel.Lon)));
             }
         }
 
@@ -256,7 +256,6 @@ namespace ArkSaveAnalyzer.Maps {
                 }
 
                 SelectedStructures = Structures.FirstOrDefault();
-
             } catch (Exception e) {
                 MessageBox.Show(e.Message);
             }

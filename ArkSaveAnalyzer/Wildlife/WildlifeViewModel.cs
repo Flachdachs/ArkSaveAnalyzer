@@ -4,13 +4,12 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows;
 using ArkSaveAnalyzer.Infrastructure;
 using ArkSaveAnalyzer.Infrastructure.Messages;
 using ArkSaveAnalyzer.Properties;
 using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.CommandWpf;
 using GalaSoft.MvvmLight.Messaging;
 using SavegameToolkit;
 using SavegameToolkitAdditions;
@@ -20,8 +19,6 @@ namespace ArkSaveAnalyzer.Wildlife {
     public class WildlifeViewModel : ViewModelBase {
         private string sortColumn;
         private readonly Dictionary<string, ListSortDirection> sortDirections = new Dictionary<string, ListSortDirection>();
-
-        private ArkData arkData;
 
         public RelayCommand<string> ContentCommand { get; }
         public RelayCommand ShowDataCommand { get; }
@@ -109,7 +106,7 @@ namespace ArkSaveAnalyzer.Wildlife {
 
         public bool UiEnabled {
             get => uiEnabled;
-            set => Set(ref uiEnabled, value);
+            set => Set(ref uiEnabled, value, true);
         }
 
         #endregion
@@ -134,12 +131,6 @@ namespace ArkSaveAnalyzer.Wildlife {
             SortCommand = new RelayCommand<string>(changeSort, s => UiEnabled);
             ExcludeCommand = new RelayCommand(exclude, () => UiEnabled);
             WishListCommand = new RelayCommand(addToWishList, () => UiEnabled);
-
-            if (!IsInDesignMode) {
-                Task.Run(async () => {
-                    arkData = await ArkDataService.GetArkData(); 
-                });
-            }
 
             Messenger.Default.Register<InvalidateMapDataMessage>(this, message => {
                 Application.Current.Dispatcher.Invoke(() => {
@@ -191,6 +182,7 @@ namespace ArkSaveAnalyzer.Wildlife {
                     cmp = string.Compare(a.ClassString, b.ClassString, StringComparison.InvariantCulture);
                     break;
                 case "Name":
+                    ArkData arkData = ArkDataService.ArkData;
                     cmp = string.Compare(a.GetNameForCreature(arkData), b.GetNameForCreature(arkData), StringComparison.InvariantCulture);
                     break;
                 case "Level":
@@ -231,14 +223,14 @@ namespace ArkSaveAnalyzer.Wildlife {
         private void exclude() {
             if (SelectedObject == null)
                 return;
-            Messenger.Default.Send(new WildlifeExcludeMessage(SelectedObject.GetNameForCreature(arkData)));
+            Messenger.Default.Send(new WildlifeExcludeMessage(SelectedObject.GetNameForCreature(ArkDataService.ArkData)));
             loadAndSortCurrentMap();
         }
 
         private void addToWishList() {
             if (SelectedObject == null)
                 return;
-            Messenger.Default.Send(new WildlifeWishListMessage(SelectedObject.GetNameForCreature(arkData)));
+            Messenger.Default.Send(new WildlifeWishListMessage(SelectedObject.GetNameForCreature(ArkDataService.ArkData)));
         }
 
         private void loadAndSortCurrentMap() {
@@ -252,6 +244,8 @@ namespace ArkSaveAnalyzer.Wildlife {
             CurrentMapName = mapName;
 
             UiEnabled = false;
+
+            ArkData arkData = ArkDataService.ArkData;
 
             try {
                 Objects.Clear();

@@ -3,6 +3,7 @@ using System.IO;
 using System.Net;
 using System.Threading.Tasks;
 using ArkSaveAnalyzer.Properties;
+using GalaSoft.MvvmLight;
 using SavegameToolkitAdditions;
 
 namespace ArkSaveAnalyzer.Infrastructure {
@@ -10,24 +11,35 @@ namespace ArkSaveAnalyzer.Infrastructure {
     public static class ArkDataService {
         private const string userAgent = "ark-save-analyzer";
         private const string arkDataFilename = "ark_data.json";
-        private const string arkDataUrl = "http://ark-tools.seen-von-ragan.de/data-download/" + arkDataFilename;
+        private const string arkDataUrl = "https://ark-tools.seen-von-ragan.de/data-download/" + arkDataFilename;
 
-        private static ArkData arkData;
         private static string filename => Path.Combine(
                 string.IsNullOrWhiteSpace(Settings.Default.WorkingDirectory) ? Path.GetTempPath() : Settings.Default.WorkingDirectory,
                 arkDataFilename);
 
-        public static async Task<ArkData> GetArkData(bool forceDownload = false) {
-            if (arkData != null && !forceDownload) {
-                return arkData;
-            }
+        public static ArkData ArkData { get; private set; }
 
-            if (!File.Exists(filename) || forceDownload) {
-                await tryDownload(new Uri(arkDataUrl), filename);
+        static ArkDataService() {
+            ArkData = new ArkData();
+            if (!ViewModelBase.IsInDesignModeStatic) {
+                EnsureArkDataAvailability();
             }
+        }
 
-            arkData = ArkDataReader.ReadFromFile(filename);
-            return arkData;
+        public static void EnsureArkDataAvailability() {
+            Task.Run(async () => {
+                if (!File.Exists(filename)) {
+                    await DownloadArkData();
+                } else {
+                    ArkData = ArkDataReader.ReadFromFile(filename);
+                }
+            });
+        }
+
+        public static async Task DownloadArkData() {
+            await tryDownload(new Uri(arkDataUrl), filename);
+
+            ArkData = ArkDataReader.ReadFromFile(filename);
         }
 
         private static async Task tryDownload(Uri uri, string path) {

@@ -82,5 +82,29 @@ namespace ArkSaveAnalyzer.Properties {
                 this["WishListWildlife"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("NaN")]
+        public double MainWindowTop {
+            get {
+                return ((double)(this["MainWindowTop"]));
+            }
+            set {
+                this["MainWindowTop"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("NaN")]
+        public double MainWindowLeft {
+            get {
+                return ((double)(this["MainWindowLeft"]));
+            }
+            set {
+                this["MainWindowLeft"] = value;
+            }
+        }
     }
 }

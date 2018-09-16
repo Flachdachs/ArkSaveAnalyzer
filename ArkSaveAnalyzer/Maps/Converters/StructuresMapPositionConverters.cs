@@ -9,10 +9,13 @@ namespace ArkSaveAnalyzer.Maps.Converters {
     public class StructuresMapPositionConverterX : IMultiValueConverter {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture) {
             try {
-                double lat = (float)values[0];
-                double lon = (float)values[1];
-                MapData mapData = (MapData)values[2];
-                Rect imageBoundaryGps = (Rect)values[3];
+                double lat = (float) values[0];
+                double lon = (float) values[1];
+                if (!(values[2] is MapData mapData)) {
+                    return 0;
+                }
+
+                Rect imageBoundaryGps = (Rect) values[3];
 
                 lat = (lat - mapData.LatShift) * mapData.LatDiv;
                 lon = (lon - mapData.LonShift) * mapData.LonDiv;
@@ -38,10 +41,13 @@ namespace ArkSaveAnalyzer.Maps.Converters {
     public class StructuresMapPositionConverterY : IMultiValueConverter {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture) {
             try {
-                double lat = (float)values[0];
-                double lon = (float)values[1];
-                MapData mapData = (MapData)values[2];
-                Rect imageBoundaryGps = (Rect)values[3];
+                double lat = (float) values[0];
+                double lon = (float) values[1];
+                if (!(values[2] is MapData mapData)) {
+                    return 0;
+                }
+
+                Rect imageBoundaryGps = (Rect) values[3];
 
                 lat = (lat - mapData.LatShift) * mapData.LatDiv;
                 lon = (lon - mapData.LonShift) * mapData.LonDiv;
@@ -63,5 +69,4 @@ namespace ArkSaveAnalyzer.Maps.Converters {
             throw new NotImplementedException();
         }
     }
-
 }

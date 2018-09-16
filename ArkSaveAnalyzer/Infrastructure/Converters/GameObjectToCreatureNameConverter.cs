@@ -8,8 +8,8 @@ namespace ArkSaveAnalyzer.Infrastructure.Converters {
 
     public class GameObjectToCreatureNameConverter : IValueConverter {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
-            GameObject gameObject = (GameObject)value;
-            return gameObject.GetNameForCreature(ArkDataService.GetArkData().Result) ?? gameObject.ClassString;
+            GameObject gameObject = value as GameObject;
+            return gameObject.GetNameForCreature(ArkDataService.ArkData) ?? gameObject?.ClassString;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {

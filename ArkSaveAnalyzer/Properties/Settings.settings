@@ -17,5 +17,11 @@
     <Setting Name="WishListWildlife" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
+    <Setting Name="MainWindowTop" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">NaN</Value>
+    </Setting>
+    <Setting Name="MainWindowLeft" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">NaN</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

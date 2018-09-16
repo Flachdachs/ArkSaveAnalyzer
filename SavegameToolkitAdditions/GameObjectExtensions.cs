@@ -42,6 +42,10 @@ namespace SavegameToolkitAdditions {
             return gameObject.ClassString == "DeathItemCache_C";
         }
 
+        public static bool IsFemale(this GameObject gameObject) {
+            return gameObject.GetPropertyValue<bool>("bIsFemale");
+        }
+
         public static GameObject CharacterStatusComponent(this GameObject gameObject) {
             return gameObject.Components.FirstOrDefault(component => component.Key.Name.StartsWith("DinoCharacterStatus_")).Value;
         }

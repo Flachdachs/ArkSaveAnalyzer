@@ -7,8 +7,12 @@
         xmlns:configuration="clr-namespace:ArkSaveAnalyzer.Configuration"
         xmlns:wildlife="clr-namespace:ArkSaveAnalyzer.Wildlife"
         xmlns:maps="clr-namespace:ArkSaveAnalyzer.Maps"
-        Title="ARK Save Analyzer" Height="1000" Width="1000" d:DesignHeight="350" d:DesignWidth="525"
+        xmlns:p="clr-namespace:ArkSaveAnalyzer.Properties"
+        Title="ARK Save Analyzer" Height="1000" Width="1000"
+        Left="{Binding MainWindowLeft,Source={x:Static p:Settings.Default},Mode=TwoWay}"
+        Top="{Binding MainWindowTop,Source={x:Static p:Settings.Default},Mode=TwoWay}"
         DataContext="{Binding Main,Source={StaticResource Locator}}">
+
     <TabControl DockPanel.Dock="Top">
         <TabItem Header="Content">
             <savegame:SavegameControl />
@@ -22,7 +26,7 @@
         <TabItem Header="Settings">
             <configuration:SettingsControl />
         </TabItem>
-</TabControl>
+    </TabControl>
 
 </Window>
 

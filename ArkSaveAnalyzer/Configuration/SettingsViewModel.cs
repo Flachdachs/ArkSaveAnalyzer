@@ -141,7 +141,7 @@ namespace ArkSaveAnalyzer.Configuration {
         }
 
         private async void update() {
-            await ArkDataService.GetArkData(true);
+            await ArkDataService.DownloadArkData();
             MessageBox.Show("Done.");
         }
     }

@@ -8,13 +8,15 @@ using SavegameToolkitAdditions;
 namespace ArkSaveAnalyzer.Maps.Converters {
     public class CreatureTooltipConverter : IMultiValueConverter {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture) {
-            GameObject gameObject = (GameObject) values[0];
-            MapData mapData = (MapData) values[1];
+            if (values[0] is GameObject gameObject && values[1] is MapData mapData) {
 
-            return $"{(gameObject.GetNameForCreature(ArkDataService.GetArkData().Result) ?? gameObject.ClassString)}: " +
-                   $"{gameObject.GetPropertyValue<string>("TamedName")} " +
-                   $"{(gameObject.GetPropertyValue<bool>("bIsFemale") ? "♀" : "♂")} {gameObject.GetFullLevel()} - " +
-                   $"{mapData.CalculateLat(gameObject.Location.Y):F1} / {mapData.CalculateLon(gameObject.Location.X):F1}";
+                return $"{gameObject.GetNameForCreature(ArkDataService.ArkData) ?? gameObject.ClassString}: " +
+                       $"{gameObject.GetPropertyValue<string>("TamedName")} " +
+                       $"{(gameObject.IsFemale() ? "♀" : "♂")} {gameObject.GetFullLevel()} - " +
+                       $"{mapData?.CalculateLat(gameObject.Location.Y):F1} / {mapData?.CalculateLon(gameObject.Location.X):F1}";
+            }
+
+            return null;
         }
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture) {

@@ -28,26 +28,26 @@ namespace SavegameToolkitAdditions {
 
         public ArkDataEntry GetItemForClass(string classString) {
             if (items == null) {
-                items = Items.ToDictionary(entry => entry.Class);
+                items = Items?.ToDictionary(entry => entry.Class);
             }
 
-            return items.TryGetValue(classString, out ArkDataEntry arkDataEntry) ? arkDataEntry : null;
+            return items != null && items.TryGetValue(classString, out ArkDataEntry arkDataEntry) ? arkDataEntry : null;
         }
 
         public ArkDataEntry GetCreatureForClass(string classString) {
             if (creatures == null) {
-                creatures = Creatures.ToDictionary(entry => entry.Class);
+                creatures = Creatures?.ToDictionary(entry => entry.Class);
             }
 
-            return creatures.TryGetValue(classString, out ArkDataEntry arkDataEntry) ? arkDataEntry : null;
+            return creatures != null && creatures.TryGetValue(classString, out ArkDataEntry arkDataEntry) ? arkDataEntry : null;
         }
 
         public ArkDataEntry GetStructureForClass(string classString) {
             if (structures == null) {
-                structures = Structures.ToDictionary(entry => entry.Class);
+                structures = Structures?.ToDictionary(entry => entry.Class);
             }
 
-            return structures.TryGetValue(classString, out ArkDataEntry arkDataEntry) ? arkDataEntry : null;
+            return structures != null && structures.TryGetValue(classString, out ArkDataEntry arkDataEntry) ? arkDataEntry : null;
         }
     }
 

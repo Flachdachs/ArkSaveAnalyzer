@@ -75,7 +75,7 @@ namespace ArkSaveAnalyzer.Maps {
             this.hidden = hidden;
             Structures = structures;
 
-            UniqueStructureNames = string.Join(", ", structures.Select(o => o.GetNameForStructure(ArkDataService.GetArkData().Result) ?? o.ClassString).Distinct());
+            UniqueStructureNames = string.Join(", ", structures.Select(o => o.GetNameForStructure(ArkDataService.ArkData) ?? o.ClassString).Distinct());
 
             Color = Colors.Crimson;
         }

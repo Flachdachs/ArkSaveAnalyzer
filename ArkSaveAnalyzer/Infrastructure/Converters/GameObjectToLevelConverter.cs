@@ -8,7 +8,7 @@ namespace ArkSaveAnalyzer.Infrastructure.Converters {
 
     public class GameObjectToLevelConverter : IValueConverter {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
-            GameObject gameObject = (GameObject)value;
+            GameObject gameObject = value as GameObject;
             return gameObject.GetBaseLevel();
         }
 

@@ -6,7 +6,7 @@ using SavegameToolkit;
 namespace ArkSaveAnalyzer.Infrastructure.Converters {
     public class GameObjectToLocationConverter : IMultiValueConverter {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture) {
-            GameObject gameObject = (GameObject) values[0];
+            GameObject gameObject = values[0] as GameObject;
 
             MapData mapData;
             if (values[1] is string mapName) {
@@ -17,12 +17,12 @@ namespace ArkSaveAnalyzer.Infrastructure.Converters {
                 mapData = MapData.For(mapName);
             }
             else {
-                mapData = (MapData) values[1];
+                mapData = values[1] as MapData;
             }
 
             return string.Format(CultureInfo.InvariantCulture, "{0:F2} {1:F2}", 
-                gameObject.Location.Y / mapData.LatDiv + mapData.LatShift, 
-                gameObject.Location.X / mapData.LonDiv + mapData.LonShift);
+                gameObject?.Location.Y / mapData?.LatDiv + mapData?.LatShift, 
+                gameObject?.Location.X / mapData?.LonDiv + mapData?.LonShift);
         }
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture) {

@@ -10,6 +10,7 @@ using GalaSoft.MvvmLight.Messaging;
 using SavegameToolkit;
 
 namespace ArkSaveAnalyzer.Savegame {
+
     public class GameObjectListViewModel : ViewModelBase {
         #region Caption
 
@@ -74,4 +75,5 @@ namespace ArkSaveAnalyzer.Savegame {
             window.Close();
         }
     }
+
 }
