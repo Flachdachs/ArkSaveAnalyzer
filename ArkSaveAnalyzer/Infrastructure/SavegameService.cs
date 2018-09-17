@@ -9,10 +9,10 @@ using ArkSaveAnalyzer.Infrastructure.Messages;
 using ArkSaveAnalyzer.Properties;
 using GalaSoft.MvvmLight.Messaging;
 using SavegameToolkit;
+using SavegameToolkitAdditions;
 
 namespace ArkSaveAnalyzer.Infrastructure {
     public class SavegameService {
-
         #region file system watch
 
         private static readonly SavegameService instance = new SavegameService();
@@ -22,11 +22,11 @@ namespace ArkSaveAnalyzer.Infrastructure {
 
         private SavegameService() {
             reloadDelay = new DispatcherTimer {
-                    Interval = TimeSpan.FromSeconds(2)
+                Interval = TimeSpan.FromSeconds(2)
             };
             reloadDelay.Tick += (o, args) => {
                 reloadDelay.Stop();
-                Messenger.Default.Send(new FileSystemWatchChangedMessage(MapData.GetMapName(Path.GetFileNameWithoutExtension((string)reloadDelay.Tag))));
+                Messenger.Default.Send(new FileSystemWatchChangedMessage(MapData.GetMapName(Path.GetFileNameWithoutExtension((string) reloadDelay.Tag))));
             };
 
             fileSystemWatcher.Changed += (o, args) => fileChanged(args.Name);
@@ -83,6 +83,7 @@ namespace ArkSaveAnalyzer.Infrastructure {
             } finally {
                 semaphore.Release();
             }
+
             return savedMaps[mapName];
         }
 

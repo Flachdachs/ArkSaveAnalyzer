@@ -15,13 +15,12 @@ namespace ArkSaveAnalyzer.Infrastructure.Converters {
                 }
 
                 mapData = MapData.For(mapName);
-            }
-            else {
+            } else {
                 mapData = values[1] as MapData;
             }
 
-            return string.Format(CultureInfo.InvariantCulture, "{0:F2} {1:F2}", 
-                gameObject?.Location.Y / mapData?.LatDiv + mapData?.LatShift, 
+            return string.Format(CultureInfo.InvariantCulture, "{0:F2} {1:F2}",
+                gameObject?.Location.Y / mapData?.LatDiv + mapData?.LatShift,
                 gameObject?.Location.X / mapData?.LonDiv + mapData?.LonShift);
         }
 

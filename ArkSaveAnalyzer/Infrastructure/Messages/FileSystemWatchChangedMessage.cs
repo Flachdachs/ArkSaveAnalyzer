@@ -1,5 +1,4 @@
 ﻿namespace ArkSaveAnalyzer.Infrastructure.Messages {
-
     public class FileSystemWatchChangedMessage {
         public string MapName { get; }
 
@@ -7,5 +6,4 @@
             MapName = mapName;
         }
     }
-
 }

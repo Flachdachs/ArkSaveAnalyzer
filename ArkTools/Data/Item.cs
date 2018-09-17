@@ -458,7 +458,7 @@ namespace ArkTools.Data {
                     int? itemID1 = itemID.GetPropertyValue<int?>("ItemID1");
                     int? itemID2 = itemID.GetPropertyValue<int?>("ItemID2");
                     if (itemID1 != null && itemID2 != null) {
-                        long id = (long) itemID1.Value << sizeof(int) | (itemID2.Value & 0xFFFFFFFFL);
+                        long id = (long) itemID1.Value << 32 | (itemID2.Value & 0xFFFFFFFFL);
                         itemIDs.Add(id);
                         continue;
                     }

@@ -8,7 +8,6 @@ using GalaSoft.MvvmLight;
 using SavegameToolkit;
 
 namespace ArkSaveAnalyzer {
-
     public class MainViewModel : ViewModelBase {
         public MainViewModel() {
             if (!IsInDesignMode) {
@@ -24,8 +23,8 @@ namespace ArkSaveAnalyzer {
 
         private static void showGameObject(string caption, GameObject gameObject) {
             GameObjectViewModel gameObjectViewModel = new GameObjectViewModel {
-                    Caption = caption,
-                    GameObject = gameObject
+                Caption = caption,
+                GameObject = gameObject
             };
 
             GameObjectWindow gameObjectWindow = new GameObjectWindow(gameObjectViewModel);
@@ -43,5 +42,4 @@ namespace ArkSaveAnalyzer {
             Settings.Default.Save();
         }
     }
-
 }

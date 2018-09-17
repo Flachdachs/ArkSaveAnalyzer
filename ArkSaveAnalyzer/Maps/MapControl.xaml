@@ -31,7 +31,7 @@
             <TabItem Header="Tames Map">
                 <maps:MapTamesControl DataContext="{Binding}" />
             </TabItem>
-            
+
             <TabItem Header="Tames List">
                 <maps:MapTamesListControl DataContext="{Binding}" />
             </TabItem>
@@ -39,7 +39,7 @@
             <TabItem Header="Structures Map">
                 <maps:MapStructuresControl DataContext="{Binding}" />
             </TabItem>
-            
+
             <TabItem Header="Structures List">
                 <maps:MapStructuresListControl DataContext="{Binding}" />
             </TabItem>

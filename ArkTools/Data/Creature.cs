@@ -100,14 +100,14 @@ namespace ArkTools.Data {
 
             int dinoID1 = creature.GetPropertyValue<int>("DinoID1");
             int dinoID2 = creature.GetPropertyValue<int>("DinoID2");
-            dinoId = (long) dinoID1 << sizeof(int) | (dinoID2 & 0xFFFFFFFFL);
+            dinoId = (long) dinoID1 << 32 | (dinoID2 & 0xFFFFFFFFL);
 
             targetingTeam = creature.GetPropertyValue<int>("TargetingTeam");
             tamed = targetingTeam < 0 || targetingTeam >= 50000;
 
             owningPlayerId = creature.GetPropertyValue<int>("OwningPlayerID");
 
-            isFemale = creature.GetPropertyValue<bool>("bIsFemale");
+            isFemale = creature.IsFemale();
 
             for (int i = 0; i < 6; i++) {
                 colorSetIndices[i] = creature.GetPropertyValue<ArkByteValue>("ColorSetIndices", i)?.ByteValue ?? 0;
@@ -128,43 +128,41 @@ namespace ArkTools.Data {
             // Not all ancestors are saved. Only those ancestor information 
             // are available which are displayed ingame in the UI.
 
-            ArkArrayStruct ancestors = creature.GetPropertyValue<ArkArrayStruct>("DinoAncestors");
+            ArkArrayStruct ancestors = creature.GetPropertyValue<IArkArray, ArkArrayStruct>("DinoAncestors");
             if (ancestors != null) {
                 // traverse female ancestor line
                 foreach (IStruct value in ancestors) {
                     StructPropertyList propertyList = (StructPropertyList)value;
-                    AncestorLineEntry entry = new AncestorLineEntry();
-
-                    entry.MaleName = propertyList.GetPropertyValue<string>("MaleName", defaultValue: string.Empty);
                     int fatherID1 = propertyList.GetPropertyValue<int>("MaleDinoID1");
                     int fatherID2 = propertyList.GetPropertyValue<int>("MaleDinoID2");
-                    entry.MaleId = (long)fatherID1 << sizeof(int) | (fatherID2 & 0xFFFFFFFFL);
-
-                    entry.FemaleName = propertyList.GetPropertyValue<string>("FemaleName", defaultValue: string.Empty);
                     int motherID1 = propertyList.GetPropertyValue<int>("FemaleDinoID1");
                     int motherID2 = propertyList.GetPropertyValue<int>("FemaleDinoID2");
-                    entry.FemaleId = (long)motherID1 << sizeof(int) | (motherID2 & 0xFFFFFFFFL);
+                    AncestorLineEntry entry = new AncestorLineEntry {
+                            MaleName = propertyList.GetPropertyValue<string>("MaleName", defaultValue: string.Empty),
+                            MaleId = (long)fatherID1 << 32 | (fatherID2 & 0xFFFFFFFFL),
+                            FemaleName = propertyList.GetPropertyValue<string>("FemaleName", defaultValue: string.Empty),
+                            FemaleId = (long)motherID1 << 32 | (motherID2 & 0xFFFFFFFFL)
+                    };
 
                     femaleAncestors.Add(entry);
                 }
             }
 
-            ancestors = creature.GetPropertyValue<ArkArrayStruct>("DinoAncestorsMale");
+            ancestors = creature.GetPropertyValue<IArkArray, ArkArrayStruct>("DinoAncestorsMale");
             if (ancestors != null) {
                 // traverse male ancestor line
-                foreach (var value in ancestors) {
+                foreach (IStruct value in ancestors) {
                     StructPropertyList propertyList = (StructPropertyList)value;
-                    AncestorLineEntry entry = new AncestorLineEntry();
-
-                    entry.MaleName = propertyList.GetPropertyValue<string>("MaleName", defaultValue: string.Empty);
                     int fatherID1 = propertyList.GetPropertyValue<int>("MaleDinoID1");
                     int fatherID2 = propertyList.GetPropertyValue<int>("MaleDinoID2");
-                    entry.MaleId = (long)fatherID1 << sizeof(int) | (fatherID2 & 0xFFFFFFFFL);
-
-                    entry.FemaleName = propertyList.GetPropertyValue<string>("FemaleName", defaultValue: string.Empty);
                     int motherID1 = propertyList.GetPropertyValue<int>("FemaleDinoID1");
                     int motherID2 = propertyList.GetPropertyValue<int>("FemaleDinoID2");
-                    entry.FemaleId = (long)motherID1 << sizeof(int) | (motherID2 & 0xFFFFFFFFL);
+                    AncestorLineEntry entry = new AncestorLineEntry {
+                            MaleName = propertyList.GetPropertyValue<string>("MaleName", defaultValue: string.Empty),
+                            MaleId = (long)fatherID1 << 32 | (fatherID2 & 0xFFFFFFFFL),
+                            FemaleName = propertyList.GetPropertyValue<string>("FemaleName", defaultValue: string.Empty),
+                            FemaleId = (long)motherID1 << 32 | (motherID2 & 0xFFFFFFFFL)
+                    };
 
                     maleAncestors.Add(entry);
                 }

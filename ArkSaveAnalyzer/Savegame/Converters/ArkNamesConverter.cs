@@ -5,7 +5,6 @@ using System.Windows.Data;
 using SavegameToolkit;
 
 namespace ArkSaveAnalyzer.Savegame.Converters {
-
     [ValueConversion(typeof(GameObject), typeof(string))]
     public class ArkNamesConverter : IValueConverter {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
@@ -16,5 +15,4 @@ namespace ArkSaveAnalyzer.Savegame.Converters {
             throw new NotImplementedException();
         }
     }
-
 }

@@ -24,7 +24,6 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
 
 namespace ArkSaveAnalyzer {
-
     public class ViewModelLocator {
         public ViewModelLocator() {
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
@@ -53,5 +52,4 @@ namespace ArkSaveAnalyzer {
             // Clear the ViewModels
         }
     }
-
 }

@@ -1,27 +1,27 @@
 ﻿using System;
+using System.ComponentModel;
 using System.IO;
 using System.Net;
 using System.Threading.Tasks;
+using System.Windows;
 using ArkSaveAnalyzer.Properties;
-using GalaSoft.MvvmLight;
 using SavegameToolkitAdditions;
 
 namespace ArkSaveAnalyzer.Infrastructure {
-
     public static class ArkDataService {
         private const string userAgent = "ark-save-analyzer";
         private const string arkDataFilename = "ark_data.json";
         private const string arkDataUrl = "https://ark-tools.seen-von-ragan.de/data-download/" + arkDataFilename;
 
         private static string filename => Path.Combine(
-                string.IsNullOrWhiteSpace(Settings.Default.WorkingDirectory) ? Path.GetTempPath() : Settings.Default.WorkingDirectory,
-                arkDataFilename);
+            string.IsNullOrWhiteSpace(Settings.Default.WorkingDirectory) ? Path.GetTempPath() : Settings.Default.WorkingDirectory,
+            arkDataFilename);
 
         public static ArkData ArkData { get; private set; }
 
         static ArkDataService() {
             ArkData = new ArkData();
-            if (!ViewModelBase.IsInDesignModeStatic) {
+            if (!DesignerProperties.GetIsInDesignMode(new DependencyObject())) {
                 EnsureArkDataAvailability();
             }
         }
@@ -43,11 +43,12 @@ namespace ArkSaveAnalyzer.Infrastructure {
         }
 
         private static async Task tryDownload(Uri uri, string path) {
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uri);
+            HttpWebRequest request = (HttpWebRequest) WebRequest.Create(uri);
             request.UserAgent = userAgent;
             if (File.Exists(path)) {
                 request.IfModifiedSince = File.GetLastWriteTimeUtc(path);
             }
+
             request.Timeout = 10000;
 
             using (HttpWebResponse response = await request.GetHttpResponseAsync()) {
@@ -78,29 +79,28 @@ namespace ArkSaveAnalyzer.Infrastructure {
         /// check the <see cref="HttpWebResponse.StatusCode"/> property to determine how to handle the response.</remarks>
         public static HttpWebResponse GetHttpResponse(this HttpWebRequest request) {
             try {
-                return (HttpWebResponse)request.GetResponse();
+                return (HttpWebResponse) request.GetResponse();
             } catch (WebException ex) {
                 // only handle protocol errors that have valid responses
 
                 if (ex.Response == null || ex.Status != WebExceptionStatus.ProtocolError)
                     throw;
 
-                return (HttpWebResponse)ex.Response;
+                return (HttpWebResponse) ex.Response;
             }
         }
 
         public static async Task<HttpWebResponse> GetHttpResponseAsync(this HttpWebRequest request) {
             try {
-                return (HttpWebResponse)await request.GetResponseAsync();
+                return (HttpWebResponse) await request.GetResponseAsync();
             } catch (WebException ex) {
                 // only handle protocol errors that have valid responses
 
                 if (ex.Response == null || ex.Status != WebExceptionStatus.ProtocolError)
                     throw;
 
-                return (HttpWebResponse)ex.Response;
+                return (HttpWebResponse) ex.Response;
             }
         }
     }
-
 }

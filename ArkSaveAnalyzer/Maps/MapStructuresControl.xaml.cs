@@ -13,15 +13,12 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ArkSaveAnalyzer.Maps
-{
+namespace ArkSaveAnalyzer.Maps {
     /// <summary>
     /// Interaction logic for MapStructuresControl.xaml
     /// </summary>
-    public partial class MapStructuresControl : UserControl
-    {
-        public MapStructuresControl()
-        {
+    public partial class MapStructuresControl : UserControl {
+        public MapStructuresControl() {
             InitializeComponent();
         }
     }

@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Media;
 using ArkSaveAnalyzer.Infrastructure;
 using ArkSaveAnalyzer.Infrastructure.Messages;
@@ -16,7 +17,6 @@ using SavegameToolkit;
 using SavegameToolkitAdditions;
 
 namespace ArkSaveAnalyzer.Maps {
-
     public class MapViewModel : ViewModelBase {
         private string currentMapName;
         private bool mapStyleTopographic;
@@ -42,7 +42,10 @@ namespace ArkSaveAnalyzer.Maps {
 
         public bool UiEnabled {
             get => uiEnabled;
-            set => Set(ref uiEnabled, value, true);
+            set {
+                if (Set(ref uiEnabled, value))
+                    CommandManager.InvalidateRequerySuggested();
+            }
         }
 
         #endregion
@@ -144,10 +147,11 @@ namespace ArkSaveAnalyzer.Maps {
             int cmp = 0;
             switch (column ?? sortColumn) {
                 case "Location":
-                    cmp = (int)(Math.Round(a.Location.Y, 2) - Math.Round(b.Location.Y, 2));
+                    cmp = (int) (Math.Round(a.Location.Y, 2) - Math.Round(b.Location.Y, 2));
                     if (cmp == 0) {
-                        cmp = (int)(Math.Round(a.Location.X, 2) - Math.Round(b.Location.X, 2));
+                        cmp = (int) (Math.Round(a.Location.X, 2) - Math.Round(b.Location.X, 2));
                     }
+
                     break;
                 case "Id":
                     cmp = a.Id - b.Id;
@@ -169,6 +173,7 @@ namespace ArkSaveAnalyzer.Maps {
                     if (cmp == 0) {
                         cmp = string.Compare(a.GetPropertyValue<string>("ImprinterName"), b.GetPropertyValue<string>("ImprinterName"), StringComparison.InvariantCulture);
                     }
+
                     break;
             }
 
@@ -198,8 +203,8 @@ namespace ArkSaveAnalyzer.Maps {
 
         private void openFile() {
             OpenFileDialog openFileDialog = new OpenFileDialog {
-                    FileName = fileName,
-                    CheckFileExists = true
+                FileName = fileName,
+                CheckFileExists = true
             };
             if (openFileDialog.ShowDialog() == true) {
                 fileName = openFileDialog.FileName;
@@ -222,7 +227,7 @@ namespace ArkSaveAnalyzer.Maps {
         private void showDataStructures(StructuresViewModel structuresViewModel) {
             if (structuresViewModel.Structures != null) {
                 Messenger.Default.Send(new ShowGameObjectListMessage(structuresViewModel.Structures, MapData,
-                        string.Format(CultureInfo.InvariantCulture, "{0:0.#} / {1:0.#}", structuresViewModel.Lat, structuresViewModel.Lon)));
+                    string.Format(CultureInfo.InvariantCulture, "{0:0.#} / {1:0.#}", structuresViewModel.Lat, structuresViewModel.Lon)));
             }
         }
 
@@ -274,5 +279,4 @@ namespace ArkSaveAnalyzer.Maps {
             MapBoundary = mapStyleTopographic ? MapData.BoundaryTopographic : MapData.BoundaryArtistic;
         }
     }
-
 }

@@ -1,10 +1,10 @@
 ﻿<UserControl x:Class="ArkSaveAnalyzer.Configuration.SettingsControl"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             DataContext="{Binding Settings,Source={StaticResource Locator}}"
-             d:DesignHeight="300" d:DesignWidth="600" Background="White">
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        DataContext="{Binding Settings,Source={StaticResource Locator}}"
+        d:DesignHeight="300" d:DesignWidth="600" Background="White">
     <UserControl.Resources>
         <Style TargetType="{x:Type Label}">
             <Setter Property="Margin" Value="0 0 5 5" />
@@ -55,14 +55,14 @@
             <Label Content="Excluded Wildlife" Target="{Binding ElementName=ExcludedWildlife}" VerticalAlignment="Top" />
             <TextBlock Margin="5 0 5 5">RegExp for names</TextBlock>
         </StackPanel>
-        <TextBox x:Name="ExcludedWildlife" Grid.Row="3" Grid.Column="1" Text="{Binding ExcludedWildlife}" AcceptsReturn="True" 
+        <TextBox x:Name="ExcludedWildlife" Grid.Row="3" Grid.Column="1" Text="{Binding ExcludedWildlife}" AcceptsReturn="True"
                 VerticalAlignment="Stretch" Margin="0 5 0 10" VerticalScrollBarVisibility="Auto" />
 
         <StackPanel Orientation="Vertical" Grid.Row="4" Grid.Column="0">
             <Label Content="Wildlife wish list" Target="{Binding ElementName=WishListWildlife}" VerticalAlignment="Top" />
             <TextBlock Margin="5 0 5 5">RegExp for names</TextBlock>
         </StackPanel>
-        <TextBox x:Name="WishListWildlife" Grid.Row="4" Grid.Column="1" Text="{Binding WishListWildlife}" AcceptsReturn="True" 
+        <TextBox x:Name="WishListWildlife" Grid.Row="4" Grid.Column="1" Text="{Binding WishListWildlife}" AcceptsReturn="True"
                 VerticalAlignment="Stretch" Margin="0 5 0 10" VerticalScrollBarVisibility="Auto" />
     </Grid>
 </UserControl>

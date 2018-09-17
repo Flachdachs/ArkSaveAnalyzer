@@ -6,12 +6,11 @@ using ArkSaveAnalyzer.Infrastructure;
 using ArkSaveAnalyzer.Infrastructure.Messages;
 using ArkSaveAnalyzer.Properties;
 using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.CommandWpf;
 using GalaSoft.MvvmLight.Messaging;
 using MessageBox = System.Windows.MessageBox;
 
 namespace ArkSaveAnalyzer.Configuration {
-
     // ReSharper disable once ClassNeverInstantiated.Global
     public class SettingsViewModel : ViewModelBase {
         #region ArkSavedFolder
@@ -98,8 +97,8 @@ namespace ArkSaveAnalyzer.Configuration {
 
         private void handleWildlifeExclude(string name) {
             List<string> excluded = ExcludedWildlife
-                    .Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries)
-                    .Where(s => !string.IsNullOrWhiteSpace(s)).ToList();
+                .Split(new[] {Environment.NewLine}, StringSplitOptions.RemoveEmptyEntries)
+                .Where(s => !string.IsNullOrWhiteSpace(s)).ToList();
             if (excluded.Contains(name, StringComparer.InvariantCultureIgnoreCase))
                 return;
             excluded.Add(name);
@@ -109,8 +108,8 @@ namespace ArkSaveAnalyzer.Configuration {
 
         private void handleWildlifeWishList(string name) {
             List<string> wishList = WishListWildlife
-                    .Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries)
-                    .Where(s => !string.IsNullOrWhiteSpace(s)).ToList();
+                .Split(new[] {Environment.NewLine}, StringSplitOptions.RemoveEmptyEntries)
+                .Where(s => !string.IsNullOrWhiteSpace(s)).ToList();
             if (wishList.Contains(name, StringComparer.InvariantCultureIgnoreCase))
                 return;
             wishList.Add(name);
@@ -145,5 +144,4 @@ namespace ArkSaveAnalyzer.Configuration {
             MessageBox.Show("Done.");
         }
     }
-
 }

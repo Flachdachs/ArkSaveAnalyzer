@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
+using System.Windows.Input;
 using ArkSaveAnalyzer.Infrastructure;
 using ArkSaveAnalyzer.Infrastructure.Messages;
 using GalaSoft.MvvmLight;
@@ -12,7 +13,6 @@ using SavegameToolkit;
 using SavegameToolkitAdditions;
 
 namespace ArkSaveAnalyzer.Savegame {
-
     public class SavegameViewModel : ViewModelBase {
         private string currentMapName;
 
@@ -69,7 +69,10 @@ namespace ArkSaveAnalyzer.Savegame {
 
         public bool UiEnabled {
             get => uiEnabled;
-            set => Set(ref uiEnabled, value);
+            set {
+                if (Set(ref uiEnabled, value))
+                    CommandManager.InvalidateRequerySuggested();
+            }
         }
 
         #endregion
@@ -96,8 +99,8 @@ namespace ArkSaveAnalyzer.Savegame {
 
                 IEnumerable<GameObject> filteredObjects = objects;
                 if (!string.IsNullOrWhiteSpace(filterText)) {
-                    filteredObjects = objects.Where(o => 
-                        o.ClassString.ToLowerInvariant().Contains(filterText.ToLowerInvariant()) || 
+                    filteredObjects = objects.Where(o =>
+                        o.ClassString.ToLowerInvariant().Contains(filterText.ToLowerInvariant()) ||
                         o.Names.Any(s => s.ToString().ToLowerInvariant().Contains(filterText.ToLowerInvariant())));
                 }
 
@@ -139,8 +142,5 @@ namespace ArkSaveAnalyzer.Savegame {
 
             UiEnabled = true;
         }
-
-
     }
-
 }

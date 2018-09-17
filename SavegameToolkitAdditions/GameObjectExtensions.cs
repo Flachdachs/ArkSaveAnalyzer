@@ -29,6 +29,11 @@ namespace SavegameToolkitAdditions {
             return teamType.IsTamed();
         }
 
+        public static bool IsUnclaimedBaby(this GameObject gameObject) {
+            TeamType teamType = TeamTypes.ForTeam(gameObject.GetPropertyValue<int>("TargetingTeam"));
+            return teamType == TeamType.Breeding;
+        }
+
         public static bool IsWeapon(this GameObject gameObject) {
             return gameObject.HasAnyProperty("AssociatedPrimalItem") || gameObject.HasAnyProperty("MyPawn");
         }
@@ -94,6 +99,14 @@ namespace SavegameToolkitAdditions {
 
         public static string GetNameForItem(this GameObject gameObject, ArkData arkData) {
             return arkData.GetItemForClass(gameObject.ClassString)?.Name;
+        }
+
+        public static long GetDinoId(this GameObject gameObject) {
+            return CreateDinoId(gameObject.GetPropertyValue<int>("DinoID1"), gameObject.GetPropertyValue<int>("DinoID2"));
+        }
+
+        public static long CreateDinoId(int id1, int id2) {
+            return (long)id1 << 32 | (id2 & 0xFFFFFFFFL);
         }
     }
 }

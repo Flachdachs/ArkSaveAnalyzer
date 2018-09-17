@@ -9,7 +9,6 @@ namespace ArkSaveAnalyzer.Maps.Converters {
     public class CreatureTooltipConverter : IMultiValueConverter {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture) {
             if (values[0] is GameObject gameObject && values[1] is MapData mapData) {
-
                 return $"{gameObject.GetNameForCreature(ArkDataService.ArkData) ?? gameObject.ClassString}: " +
                        $"{gameObject.GetPropertyValue<string>("TamedName")} " +
                        $"{(gameObject.IsFemale() ? "♀" : "♂")} {gameObject.GetFullLevel()} - " +

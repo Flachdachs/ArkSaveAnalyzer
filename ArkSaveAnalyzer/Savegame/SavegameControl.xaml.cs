@@ -5,9 +5,7 @@ using GalaSoft.MvvmLight.Messaging;
 using SavegameToolkit;
 
 namespace ArkSaveAnalyzer.Savegame {
-
     public partial class SavegameControl : UserControl {
-
         public SavegameControl() {
             InitializeComponent();
 
@@ -25,7 +23,5 @@ namespace ArkSaveAnalyzer.Savegame {
             ListViewItem item = ListView.ItemContainerGenerator.ContainerFromItem(ListView.SelectedItem) as ListViewItem;
             item?.Focus();
         }
-
     }
-
 }

@@ -8,7 +8,7 @@ using SavegameToolkit.Propertys;
 using SavegameToolkit.Structs;
 using SavegameToolkit.Types;
 
-namespace ArkSaveAnalyzer.Infrastructure {
+namespace SavegameToolkitAdditions {
 
     public class ObjectCollector : IEnumerable<GameObject> {
         private readonly int startIndex;

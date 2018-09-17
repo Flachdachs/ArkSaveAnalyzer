@@ -1,5 +1,4 @@
 ﻿namespace ArkSaveAnalyzer.Infrastructure.Messages {
-
-    public class ApplicationShutdownMessage { }
-
+    public class ApplicationShutdownMessage {
+    }
 }

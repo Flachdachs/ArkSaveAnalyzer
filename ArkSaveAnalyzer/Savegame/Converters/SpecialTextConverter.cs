@@ -4,7 +4,6 @@ using System.Windows.Data;
 using SavegameToolkit;
 
 namespace ArkSaveAnalyzer.Savegame.Converters {
-
     [ValueConversion(typeof(GameObject), typeof(string))]
     public class SpecialTextConverter : IValueConverter {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
@@ -13,7 +12,7 @@ namespace ArkSaveAnalyzer.Savegame.Converters {
             float? itemRating = gameObject.GetPropertyValue<float?>("ItemRating");
             if (itemRating.HasValue) {
                 return $"{gameObject.GetPropertyValue<int>("ItemQualityIndex")}-{itemRating.Value}, " +
-                        $"{gameObject.GetPropertyValue<int>("ItemStatValues", 2)}, {gameObject.GetPropertyValue<int>("ItemStatValues", 3)}";
+                       $"{gameObject.GetPropertyValue<int>("ItemStatValues", 2)}, {gameObject.GetPropertyValue<int>("ItemStatValues", 3)}";
             }
 
             return string.Empty;
@@ -23,5 +22,4 @@ namespace ArkSaveAnalyzer.Savegame.Converters {
             throw new NotImplementedException();
         }
     }
-
 }

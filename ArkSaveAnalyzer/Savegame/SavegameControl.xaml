@@ -1,12 +1,12 @@
 ﻿<UserControl x:Class="ArkSaveAnalyzer.Savegame.SavegameControl"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" 
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:infrastructure="clr-namespace:ArkSaveAnalyzer.Infrastructure"
         xmlns:savegameToolkit="clr-namespace:SavegameToolkit;assembly=SavegameToolkit"
         xmlns:converters="clr-namespace:ArkSaveAnalyzer.Savegame.Converters"
-        d:DesignHeight="150" d:DesignWidth="1000" 
+        d:DesignHeight="150" d:DesignWidth="1000"
         DataContext="{Binding Savegame,Source={StaticResource Locator}}">
     <UserControl.Resources>
         <converters:ArkNamesConverter x:Key="arkNamesConverter" />
@@ -30,8 +30,9 @@
             <TextBox x:Name="GotoId" Width="70" Text="{Binding GotoId,UpdateSourceTrigger=PropertyChanged,Delay=1000}" VerticalAlignment="Center" IsEnabled="{Binding UiEnabled}" />
 
             <Label Content="Class Filter:" Target="{Binding ElementName=Filter}" IsEnabled="{Binding UiEnabled}" />
-            <TextBox x:Name="Filter" Width="150" Text="{Binding FilterText,UpdateSourceTrigger=PropertyChanged,Delay=1000}" VerticalAlignment="Center" IsEnabled="{Binding UiEnabled}" />
-            
+            <TextBox x:Name="Filter" Width="150" Text="{Binding FilterText,UpdateSourceTrigger=PropertyChanged,Delay=1000}" VerticalAlignment="Center"
+                    IsEnabled="{Binding UiEnabled}" />
+
             <Button Content="Special Action" VerticalAlignment="Center" Margin="10 0 0 0" Padding="5 0" Command="{Binding SpecialCommand}" />
         </StackPanel>
 

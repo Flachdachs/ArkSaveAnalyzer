@@ -4,7 +4,6 @@ using System.Linq;
 using System.Windows;
 
 namespace ArkSaveAnalyzer.Infrastructure {
-
     public class MapData {
         public string Name { get; }
         public string Directory { get; }
@@ -16,8 +15,8 @@ namespace ArkSaveAnalyzer.Infrastructure {
         public Rect BoundaryTopographic { get; }
 
         public MapData(string name, double latShift, double lonShift, double latDiv, double lonDiv, string directory = null,
-                double topX = 0, double topY = 0, double bottomX = 100, double bottomY = 100,
-                double topXTopographic = 0, double topYTopographic = 0, double bottomXTopographic = 100, double bottomYTopographic = 100) {
+            double topX = 0, double topY = 0, double bottomX = 100, double bottomY = 100,
+            double topXTopographic = 0, double topYTopographic = 0, double bottomXTopographic = 100, double bottomYTopographic = 100) {
             Name = name;
             Directory = directory ?? name;
             LatShift = latShift;
@@ -29,11 +28,11 @@ namespace ArkSaveAnalyzer.Infrastructure {
         }
 
         private static readonly Dictionary<string, MapData> mapData = new Dictionary<string, MapData> {
-                { "TheIsland", new MapData("TheIsland", 50, 50, 8000, 8000, "", 0, 0, 100, 100, 8.9, 8.4, 90.8, 92.4) },
-                { "ScorchedEarth", new MapData("ScorchedEarth_P", 50, 50, 8000, 8000, null, 0, 0, 100, 100, 6.5, 4.1, 93.9, 95.6) },
-                { "Aberration", new MapData("Aberration_P", 50, 50, 8000, 8000, null, 0, 0, 100, 100, 10.8, 9.2, 90.7, 89.7) },
-                { "TheCenter", new MapData("TheCenter", 30.342237, 55.104168, 9584, 9600, null, 0, -2, 100, 100, 1, -2.5, 104.5, 101.0) },
-                { "Ragnarok", new MapData("Ragnarok", 50.009388, 50.009388, 13100, 13100, null, 0, 0, 100, 100, 0, 0, 100, 100) }
+            {"TheIsland", new MapData("TheIsland", 50, 50, 8000, 8000, "", 0, 0, 100, 100, 8.9, 8.4, 90.8, 92.4)},
+            {"ScorchedEarth", new MapData("ScorchedEarth_P", 50, 50, 8000, 8000, null, 0, 0, 100, 100, 6.5, 4.1, 93.9, 95.6)},
+            {"Aberration", new MapData("Aberration_P", 50, 50, 8000, 8000, null, 0, 0, 100, 100, 10.8, 9.2, 90.7, 89.7)},
+            {"TheCenter", new MapData("TheCenter", 30.342237, 55.104168, 9584, 9600, null, 0, -2, 100, 100, 1, -2.5, 104.5, 101.0)},
+            {"Ragnarok", new MapData("Ragnarok", 50.009388, 50.009388, 13100, 13100, null, 0, 0, 100, 100, 0, 0, 100, 100)}
         };
 
         public static MapData For(string mapName) {
@@ -53,5 +52,4 @@ namespace ArkSaveAnalyzer.Infrastructure {
             return LonShift + x / LonDiv;
         }
     }
-
 }

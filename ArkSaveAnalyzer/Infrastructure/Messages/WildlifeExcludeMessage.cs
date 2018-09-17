@@ -1,5 +1,4 @@
 ﻿namespace ArkSaveAnalyzer.Infrastructure.Messages {
-
     public class WildlifeExcludeMessage {
         public string Name { get; }
 
@@ -7,5 +6,4 @@
             Name = name;
         }
     }
-
 }

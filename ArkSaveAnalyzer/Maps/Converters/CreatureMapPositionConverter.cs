@@ -7,21 +7,22 @@ using ArkSaveAnalyzer.Infrastructure;
 using SavegameToolkit;
 
 namespace ArkSaveAnalyzer.Maps.Converters {
-
     public class CreatureMapPositionConverterX : IMultiValueConverter {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture) {
             try {
                 if (!(values[0] is GameObject creature)) {
                     return 0;
                 }
+
                 if (!(values[1] is MapData mapData)) {
                     return 0;
                 }
-                Rect imageBoundaryGps = (Rect)values[2];
+
+                Rect imageBoundaryGps = (Rect) values[2];
 
                 Rect imageBoundaryUe = new Rect(
-                        new Point((imageBoundaryGps.X - mapData.LonShift) * mapData.LonDiv, (imageBoundaryGps.Y - mapData.LatShift) * mapData.LatDiv),
-                        new Point((imageBoundaryGps.Right - mapData.LonShift) * mapData.LonDiv, (imageBoundaryGps.Bottom - mapData.LatShift) * mapData.LatDiv));
+                    new Point((imageBoundaryGps.X - mapData.LonShift) * mapData.LonDiv, (imageBoundaryGps.Y - mapData.LatShift) * mapData.LatDiv),
+                    new Point((imageBoundaryGps.Right - mapData.LonShift) * mapData.LonDiv, (imageBoundaryGps.Bottom - mapData.LatShift) * mapData.LatDiv));
 
                 Point positionInImage = new Point(creature.Location.X - imageBoundaryUe.X, creature.Location.Y - imageBoundaryUe.Y);
 
@@ -43,14 +44,16 @@ namespace ArkSaveAnalyzer.Maps.Converters {
                 if (!(values[0] is GameObject creature)) {
                     return 0;
                 }
+
                 if (!(values[1] is MapData mapData)) {
                     return 0;
                 }
-                Rect imageBoundaryGps = (Rect)values[2];
+
+                Rect imageBoundaryGps = (Rect) values[2];
 
                 Rect imageBoundaryUe = new Rect(
-                        new Point((imageBoundaryGps.X - mapData.LonShift) * mapData.LonDiv, (imageBoundaryGps.Y - mapData.LatShift) * mapData.LatDiv),
-                        new Point((imageBoundaryGps.Right - mapData.LonShift) * mapData.LonDiv, (imageBoundaryGps.Bottom - mapData.LatShift) * mapData.LatDiv));
+                    new Point((imageBoundaryGps.X - mapData.LonShift) * mapData.LonDiv, (imageBoundaryGps.Y - mapData.LatShift) * mapData.LatDiv),
+                    new Point((imageBoundaryGps.Right - mapData.LonShift) * mapData.LonDiv, (imageBoundaryGps.Bottom - mapData.LatShift) * mapData.LatDiv));
 
                 Point positionInImage = new Point(creature.Location.X - imageBoundaryUe.X, creature.Location.Y - imageBoundaryUe.Y);
 
@@ -65,5 +68,4 @@ namespace ArkSaveAnalyzer.Maps.Converters {
             throw new NotImplementedException();
         }
     }
-
 }

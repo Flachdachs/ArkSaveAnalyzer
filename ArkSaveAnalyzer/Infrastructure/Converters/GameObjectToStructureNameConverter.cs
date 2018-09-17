@@ -5,7 +5,6 @@ using SavegameToolkit;
 using SavegameToolkitAdditions;
 
 namespace ArkSaveAnalyzer.Infrastructure.Converters {
-
     public class GameObjectToStructureNameConverter : IValueConverter {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
             GameObject gameObject = value as GameObject;
@@ -16,5 +15,4 @@ namespace ArkSaveAnalyzer.Infrastructure.Converters {
             throw new NotImplementedException();
         }
     }
-
 }

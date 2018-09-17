@@ -7,7 +7,6 @@ using SavegameToolkit;
 using SavegameToolkitAdditions;
 
 namespace ArkSaveAnalyzer.Maps {
-
     public class StructuresViewModel : ViewModelBase {
         #region Lat
 
@@ -80,5 +79,4 @@ namespace ArkSaveAnalyzer.Maps {
             Color = Colors.Crimson;
         }
     }
-
 }
