@@ -99,6 +99,21 @@ namespace ArkSaveAnalyzer.Wildlife {
 
         #endregion
 
+        #region Untameable
+
+        private bool untameable;
+
+        public bool Untameable {
+            get => untameable;
+            set {
+                if (Set(ref untameable, value)) {
+                    loadAndSortCurrentMap();
+                }
+            }
+        }
+
+        #endregion
+
         #region UiEnabled
 
         private bool uiEnabled = true;
@@ -267,6 +282,10 @@ namespace ArkSaveAnalyzer.Wildlife {
 
                 if (!string.IsNullOrWhiteSpace(filterText)) {
                     filteredObjects = filteredObjects.Where(o => o.GetNameForCreature(arkData).ToLowerInvariant().Contains(filterText.ToLowerInvariant()));
+                }
+
+                if (!Untameable) {
+                    filteredObjects = filteredObjects.Where(o => !o.GetPropertyValue<bool>("bForceDisablingTaming"));
                 }
 
                 if (!string.IsNullOrEmpty(filterLevel)) {

@@ -23,7 +23,7 @@
                 </Style>
             </StackPanel.Resources>
             <RadioButton Content="The Island" Command="{Binding ContentCommand}" CommandParameter="TheIsland" />
-            <RadioButton Content="Scorched Earth" Command="{Binding ContentCommand}" CommandParameter="ScorchedEarth" IsEnabled="{Binding UiEnabled}" />
+            <RadioButton Content="ScE" Command="{Binding ContentCommand}" CommandParameter="ScorchedEarth" IsEnabled="{Binding UiEnabled}" />
             <RadioButton Content="Aberration" Command="{Binding ContentCommand}" CommandParameter="Aberration" IsEnabled="{Binding UiEnabled}" />
             <RadioButton Content="Extinction" Command="{Binding ContentCommand}" CommandParameter="Extinction" IsEnabled="{Binding UiEnabled}" />
             <RadioButton Content="The Center" Command="{Binding ContentCommand}" CommandParameter="TheCenter" IsEnabled="{Binding UiEnabled}" />
@@ -39,6 +39,7 @@
 
             <CheckBox Content="Apply wish list" IsChecked="{Binding ApplyWishList}" VerticalAlignment="Center" IsEnabled="{Binding UiEnabled}" Margin="5 0 0 0" />
             <CheckBox Content="Auto reload" IsChecked="{Binding AutoReload}" VerticalAlignment="Center" IsEnabled="{Binding UiEnabled}" Margin="10 0 0 0" />
+            <CheckBox Content="Untameable" IsChecked="{Binding Untameable}" VerticalAlignment="Center" IsEnabled="{Binding UiEnabled}" Margin="10 0 0 0"/>
         </StackPanel>
 
         <ListView x:Name="ListView" ItemsSource="{Binding Objects}" SelectedItem="{Binding SelectedObject}">
