@@ -4,6 +4,7 @@ using System.Linq;
 using MonoOptions;
 using SavegameToolkit;
 using SavegameToolkit.Types;
+using SavegameToolkitAdditions;
 
 namespace ArkTools.Command {
 

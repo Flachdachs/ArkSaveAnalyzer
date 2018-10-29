@@ -10,6 +10,7 @@ using SavegameToolkit.Propertys;
 using SavegameToolkit.Structs;
 using SavegameToolkit.Types;
 using SavegameToolkitAdditions;
+using SavegameToolkitAdditions.IndexMappings;
 
 namespace ArkTools.Data {
     public class Item {

@@ -7,6 +7,7 @@ using SavegameToolkit.Arrays;
 using SavegameToolkit.Structs;
 using SavegameToolkit.Types;
 using SavegameToolkitAdditions;
+using SavegameToolkitAdditions.IndexMappings;
 
 namespace ArkTools.Data {
 

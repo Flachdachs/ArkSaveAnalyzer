@@ -16,6 +16,7 @@ using SavegameToolkit;
 using SavegameToolkitAdditions;
 
 namespace ArkSaveAnalyzer.Wildlife {
+
     public class WildlifeViewModel : ViewModelBase {
         private string sortColumn;
         private readonly Dictionary<string, ListSortDirection> sortDirections = new Dictionary<string, ListSortDirection>();
@@ -273,15 +274,15 @@ namespace ArkSaveAnalyzer.Wildlife {
                 IEnumerable<GameObject> filteredObjects = objects.Where(o => o.IsCreature() && o.IsWild());
 
                 string[] excludedWildlife = Settings.Default.ExcludedWildlife
-                    .Split(new[] {Environment.NewLine}, StringSplitOptions.RemoveEmptyEntries)
-                    .Where(s => !string.IsNullOrWhiteSpace(s)).ToArray();
+                        .Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries)
+                        .Where(s => !string.IsNullOrWhiteSpace(s)).ToArray();
 
                 foreach (string exclude in excludedWildlife) {
-                    filteredObjects = filteredObjects.Where(o => !Regex.IsMatch(o.GetNameForCreature(arkData), exclude, RegexOptions.IgnoreCase));
+                    filteredObjects = filteredObjects.Where(o => !Regex.IsMatch(o.GetNameForCreature(arkData, o.ClassString), exclude, RegexOptions.IgnoreCase));
                 }
 
                 if (!string.IsNullOrWhiteSpace(filterText)) {
-                    filteredObjects = filteredObjects.Where(o => o.GetNameForCreature(arkData).ToLowerInvariant().Contains(filterText.ToLowerInvariant()));
+                    filteredObjects = filteredObjects.Where(o => (o.GetNameForCreature(arkData, o.ClassString)).ToLowerInvariant().Contains(filterText.ToLowerInvariant()));
                 }
 
                 if (!Untameable) {
@@ -311,8 +312,8 @@ namespace ArkSaveAnalyzer.Wildlife {
 
                 if (ApplyWishList) {
                     string[] wishListWildlife = Settings.Default.WishListWildlife
-                        .Split(new[] {Environment.NewLine}, StringSplitOptions.RemoveEmptyEntries)
-                        .Where(s => !string.IsNullOrWhiteSpace(s)).ToArray();
+                            .Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries)
+                            .Where(s => !string.IsNullOrWhiteSpace(s)).ToArray();
 
                     filteredObjects = filteredObjects.Where(o => wishListWildlife.Any(wish => Regex.IsMatch(o.GetNameForCreature(arkData), wish, RegexOptions.IgnoreCase)));
                 }
@@ -333,4 +334,5 @@ namespace ArkSaveAnalyzer.Wildlife {
             UiEnabled = true;
         }
     }
+
 }

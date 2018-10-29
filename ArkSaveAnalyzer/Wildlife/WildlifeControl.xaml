@@ -39,7 +39,7 @@
 
             <CheckBox Content="Apply wish list" IsChecked="{Binding ApplyWishList}" VerticalAlignment="Center" IsEnabled="{Binding UiEnabled}" Margin="5 0 0 0" />
             <CheckBox Content="Auto reload" IsChecked="{Binding AutoReload}" VerticalAlignment="Center" IsEnabled="{Binding UiEnabled}" Margin="10 0 0 0" />
-            <CheckBox Content="Untameable" IsChecked="{Binding Untameable}" VerticalAlignment="Center" IsEnabled="{Binding UiEnabled}" Margin="10 0 0 0"/>
+            <CheckBox Content="Untameable" IsChecked="{Binding Untameable}" VerticalAlignment="Center" IsEnabled="{Binding UiEnabled}" Margin="10 0 0 0" />
         </StackPanel>
 
         <ListView x:Name="ListView" ItemsSource="{Binding Objects}" SelectedItem="{Binding SelectedObject}">
@@ -48,10 +48,8 @@
                     <Setter Property="HorizontalContentAlignment" Value="Left" />
                 </Style>
                 <ContextMenu x:Key="ItemContextMenu">
-                    <MenuItem Header="Character BP"
-                            Command="{Binding Path=DataContext.ShowDataCommand, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListView}}" />
-                    <MenuItem Header="Exclude Species"
-                            Command="{Binding Path=DataContext.ExcludeCommand, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListView}}" />
+                    <MenuItem Header="Character BP" Command="{Binding Path=DataContext.ShowDataCommand, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListView}}" />
+                    <MenuItem Header="Exclude Species" Command="{Binding Path=DataContext.ExcludeCommand, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListView}}" />
                     <MenuItem Header="Add Species to Wish List"
                             Command="{Binding Path=DataContext.WishListCommand, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListView}}" />
                 </ContextMenu>

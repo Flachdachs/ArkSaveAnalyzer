@@ -8,17 +8,6 @@ a small GUI to present the data in the savegame
 * ArkTools  
 mostly a translation of Qowyn's [ark-savegame-toolkit](https://github.com/Qowyn/ark-savegame-toolkit) v0.8.1 and [ark-tools](https://github.com/Qowyn/ark-tools) v0.6.4 from Java into C#.
 
-### SavegameToolkit
-
-This is a library that actually reads the files of an ARK "Saved" folder. It also can write the content in Json format, can read the Json files and write back to binary files.
-
-However, reading Json is not fully implemented, writing binary is not tested at all and certainly contains some errors that break the savegame files.
-I also refactored some parts to better match the C# philosophy, or to be able to write C# code at all, or because I thought it is better structured in a different way.
-
-### SavegameToolkitAdditions
-
-A few parts that were originally part of ArkTools but are usefull for other projects too.
-
 ### ArkTools
 
 This is a command line tool to convert the binary files to Json and back, and to create usefull json files like a list of all creatures.
@@ -48,6 +37,10 @@ The tabs do:
 * Map: Shows all tamed creatures and also player created structures on maps or as a list. The structures list shows only one line for each unique pair of coordinates where structures are placed (doubleclick to expand). Some of them might be marked as hidden when the hiding feature of the S+ mod was used.
 * Settings: self-explanatory, almost. There is no save button, it's self-saving when changed. 
 For "Excluded Wildlife" use case insensitive significant parts of the creature name, or the full name, or a regular expression like `^ant` to exclude Ants (i.e. Titanomyrma) but not Manta or Gigant (i.e. Giganotosaurus).
+
+## References
+
+This project needs SavegameToolkit and SavegameToolkitAdditions from [ArkSavegameToolkit](https://github.com/Flachdachs/ArkSavegameToolkit).
 
 ## Thanks
 

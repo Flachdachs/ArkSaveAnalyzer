@@ -12,9 +12,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\ArkSavegameToolkit\SavegameToolkitAdditions\SavegameToolkitAdditions.csproj" />
+    <ProjectReference Include="..\..\ArkSavegameToolkit\SavegameToolkit\SavegameToolkit.csproj" />
     <ProjectReference Include="..\MonoOptions\MonoOptions.csproj" />
-    <ProjectReference Include="..\SavegameToolkitAdditions\SavegameToolkitAdditions.csproj" />
-    <ProjectReference Include="..\SavegameToolkit\SavegameToolkit.csproj" />
   </ItemGroup>
 
   <ItemGroup>
