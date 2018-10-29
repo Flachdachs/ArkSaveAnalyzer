@@ -242,12 +242,12 @@
     <Resource Include="assets\TheIsland.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\ArkSavegameToolkit\SavegameToolkitAdditions\SavegameToolkitAdditions.csproj">
-      <Project>{3ddddf5c-0c07-4ca0-a226-1be9386a0c6d}</Project>
+    <ProjectReference Include="..\ArkSavegameToolkit\SavegameToolkitAdditions\SavegameToolkitAdditions.csproj">
+      <Project>{b7cee6c8-2e42-4eb2-96d7-7e5b741472d7}</Project>
       <Name>SavegameToolkitAdditions</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\ArkSavegameToolkit\SavegameToolkit\SavegameToolkit.csproj">
-      <Project>{1212e587-a765-4d46-a21f-2c640114ce5b}</Project>
+    <ProjectReference Include="..\ArkSavegameToolkit\SavegameToolkit\SavegameToolkit.csproj">
+      <Project>{62c8755a-400c-4050-9130-32e3be9f2900}</Project>
       <Name>SavegameToolkit</Name>
     </ProjectReference>
   </ItemGroup>
