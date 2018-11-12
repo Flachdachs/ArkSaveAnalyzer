@@ -19,6 +19,7 @@
             <RadioButton Content="The Island" Command="{Binding MapCommand}" CommandParameter="TheIsland" />
             <RadioButton Content="Scorched Earth" Command="{Binding MapCommand}" CommandParameter="ScorchedEarth" />
             <RadioButton Content="Aberration" Command="{Binding MapCommand}" CommandParameter="Aberration" />
+            <RadioButton Content="Extinction" Command="{Binding MapCommand}" CommandParameter="Extinction" />
             <RadioButton Content="The Center" Command="{Binding MapCommand}" CommandParameter="TheCenter" />
             <RadioButton Content="Ragnarok" Command="{Binding MapCommand}" CommandParameter="Ragnarok" />
             <RadioButton Content="Open File" Command="{Binding OpenFileCommand}" />

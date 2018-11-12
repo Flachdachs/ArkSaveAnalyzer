@@ -273,10 +273,15 @@ namespace ArkSaveAnalyzer.Maps {
                 return;
 
             string imgFilename = $"pack://application:,,,/assets/{(mapStyleTopographic ? $"{mapName}_Topographic.jpg" : $"{mapName}.jpg")}";
-            MapImage = new ImageSourceConverter().ConvertFromString(imgFilename) as ImageSource;
 
-            MapData = MapData.For(mapName);
-            MapBoundary = mapStyleTopographic ? MapData.BoundaryTopographic : MapData.BoundaryArtistic;
+            try {
+                MapImage = new ImageSourceConverter().ConvertFromString(imgFilename) as ImageSource;
+                MapData = MapData.For(mapName);
+                MapBoundary = mapStyleTopographic ? MapData.BoundaryTopographic : MapData.BoundaryArtistic;
+            }
+            catch (Exception e) {
+                MessageBox.Show(e.Message);
+            }
         }
     }
 }

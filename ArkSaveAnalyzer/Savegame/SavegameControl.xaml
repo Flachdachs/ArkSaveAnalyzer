@@ -23,6 +23,7 @@
             <RadioButton Content="The Island" Command="{Binding ContentCommand}" CommandParameter="TheIsland" />
             <RadioButton Content="Scorched Earth" Command="{Binding ContentCommand}" CommandParameter="ScorchedEarth" />
             <RadioButton Content="Aberration" Command="{Binding ContentCommand}" CommandParameter="Aberration" />
+            <RadioButton Content="Extinction" Command="{Binding ContentCommand}" CommandParameter="Extinction" />
             <RadioButton Content="The Center" Command="{Binding ContentCommand}" CommandParameter="TheCenter" />
             <RadioButton Content="Ragnarok" Command="{Binding ContentCommand}" CommandParameter="Ragnarok" />
 
