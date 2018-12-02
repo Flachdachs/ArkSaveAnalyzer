@@ -73,18 +73,18 @@ namespace ArkSaveAnalyzer.Infrastructure {
             return gameObjects[id];
         }
 
-        public static async Task<GameObjectContainer> GetGameObjects(string mapName, bool getCached = true) {
+        public static async Task<GameObjectContainer> GetGameObjects(string mapOrFileName, bool getCached = true) {
             // copy and analyze only once at a time
             await semaphore.WaitAsync();
             try {
-                if (!getCached || !savedMaps.ContainsKey(mapName)) {
-                    savedMaps[mapName] = await getMapObjects(mapName);
+                if (!getCached || !savedMaps.ContainsKey(mapOrFileName)) {
+                    savedMaps[mapOrFileName] = await getMapObjects(mapOrFileName);
                 }
             } finally {
                 semaphore.Release();
             }
 
-            return savedMaps[mapName];
+            return savedMaps[mapOrFileName];
         }
 
         public static Task<GameObjectContainer> GetGameObjectsForFile(string filename) {
@@ -93,10 +93,14 @@ namespace ArkSaveAnalyzer.Infrastructure {
 
         #endregion
 
-        private static Task<GameObjectContainer> getMapObjects(string mapName) {
-            File.Copy(buildMapFilename(mapName), $@"{workingDir}\{mapName}.ark", true);
+        private static Task<GameObjectContainer> getMapObjects(string mapOrFileName) {
+            if (mapOrFileName.Contains('\\') || mapOrFileName.Contains('/')) {
+                return readSavegameFile(mapOrFileName);
+            }
 
-            return readSavegameMap(mapName);
+            File.Copy(buildMapFilename(mapOrFileName), $@"{workingDir}\{mapOrFileName}.ark", true);
+
+            return readSavegameMap(mapOrFileName);
         }
 
         private static string buildMapFilename(string mapName) {
@@ -124,7 +128,7 @@ namespace ArkSaveAnalyzer.Infrastructure {
                         .WithDataFiles(false)
                         .WithEmbeddedData(false)
                         .WithDataFilesObjectMap(false)
-                        .WithObjectFilter(o => !o.IsItem && (o.Parent != null || o.Components.Any()))
+                        //.WithObjectFilter(o => !o.IsItem && (o.Parent != null || o.Components.Any()))
                         .WithBuildComponentTree(true));
                 }
 

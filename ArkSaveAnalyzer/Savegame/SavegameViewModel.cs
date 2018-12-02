@@ -9,16 +9,19 @@ using ArkSaveAnalyzer.Infrastructure.Messages;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 using GalaSoft.MvvmLight.Messaging;
+using Microsoft.Win32;
 using SavegameToolkit;
 using SavegameToolkitAdditions;
 
 namespace ArkSaveAnalyzer.Savegame {
+
     public class SavegameViewModel : ViewModelBase {
         private string currentMapName;
+        private string fileName;
 
         public RelayCommand<string> ContentCommand { get; }
         public RelayCommand ShowDataCommand { get; }
-        public RelayCommand SpecialCommand { get; }
+        public RelayCommand OpenFileCommand { get; }
 
         public ObservableCollection<GameObject> Objects { get; } = new ObservableCollection<GameObject>();
 
@@ -80,7 +83,7 @@ namespace ArkSaveAnalyzer.Savegame {
         public SavegameViewModel() {
             ContentCommand = new RelayCommand<string>(mapName => loadContent(mapName, false), s => UiEnabled);
             ShowDataCommand = new RelayCommand(showData, () => UiEnabled);
-            SpecialCommand = new RelayCommand(specialCommand, () => UiEnabled);
+            OpenFileCommand = new RelayCommand(openFile, () => UiEnabled);
 
             Messenger.Default.Register<InvalidateMapDataMessage>(this, message => {
                 Application.Current.Dispatcher.Invoke(() => {
@@ -100,8 +103,8 @@ namespace ArkSaveAnalyzer.Savegame {
                 IEnumerable<GameObject> filteredObjects = objects;
                 if (!string.IsNullOrWhiteSpace(filterText)) {
                     filteredObjects = objects.Where(o =>
-                        o.ClassString.ToLowerInvariant().Contains(filterText.ToLowerInvariant()) ||
-                        o.Names.Any(s => s.ToString().ToLowerInvariant().Contains(filterText.ToLowerInvariant())));
+                            o.ClassString.ToLowerInvariant().Contains(filterText.ToLowerInvariant()) ||
+                            o.Names.Any(s => s.ToString().ToLowerInvariant().Contains(filterText.ToLowerInvariant())));
                 }
 
                 currentMapName = mapName;
@@ -122,6 +125,19 @@ namespace ArkSaveAnalyzer.Savegame {
             }
         }
 
+        private void openFile() {
+            OpenFileDialog openFileDialog = new OpenFileDialog
+            {
+                    FileName = fileName,
+                    CheckFileExists = true
+            };
+            if (openFileDialog.ShowDialog() == true)
+            {
+                fileName = openFileDialog.FileName;
+                loadContent(fileName, false);
+            }
+        }
+
         private async void specialCommand() {
             UiEnabled = false;
 
@@ -129,7 +145,7 @@ namespace ArkSaveAnalyzer.Savegame {
                 GameObjectContainer objects = await SavegameService.GetGameObjects(currentMapName);
 
                 IEnumerable<GameObject> filteredObjects = objects
-                    .Where(o => !o.IsCreature() && (o.HasAnyProperty("OwningPlayerID") || o.HasAnyProperty("OwnerName")));
+                        .Where(o => !o.IsCreature() && (o.HasAnyProperty("OwningPlayerID") || o.HasAnyProperty("OwnerName")));
                 //.Where(o => o.ClassString == "PrimalItem_WeaponMetalHatchet_C" && !o.GetPropertyValue<bool>("bIsEngram"));
 
                 Objects.Clear();
@@ -143,4 +159,5 @@ namespace ArkSaveAnalyzer.Savegame {
             UiEnabled = true;
         }
     }
+
 }

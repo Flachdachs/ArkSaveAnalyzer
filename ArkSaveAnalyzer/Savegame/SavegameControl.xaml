@@ -34,7 +34,7 @@
             <TextBox x:Name="Filter" Width="150" Text="{Binding FilterText,UpdateSourceTrigger=PropertyChanged,Delay=1000}" VerticalAlignment="Center"
                     IsEnabled="{Binding UiEnabled}" />
 
-            <Button Content="Special Action" VerticalAlignment="Center" Margin="10 0 0 0" Padding="5 0" Command="{Binding SpecialCommand}" />
+            <Button Content="Open File" VerticalAlignment="Center" Margin="10 0 0 0" Padding="5 0" Command="{Binding OpenFileCommand}" />
         </StackPanel>
 
         <ListView x:Name="ListView" ItemsSource="{Binding Objects}" SelectedItem="{Binding SelectedObject}">
