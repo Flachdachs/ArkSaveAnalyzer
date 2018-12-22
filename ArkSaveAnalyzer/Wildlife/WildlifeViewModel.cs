@@ -315,7 +315,7 @@ namespace ArkSaveAnalyzer.Wildlife {
                             .Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries)
                             .Where(s => !string.IsNullOrWhiteSpace(s)).ToArray();
 
-                    filteredObjects = filteredObjects.Where(o => wishListWildlife.Any(wish => Regex.IsMatch(o.GetNameForCreature(arkData), wish, RegexOptions.IgnoreCase)));
+                    filteredObjects = filteredObjects.Where(o => wishListWildlife.Any(wish => Regex.IsMatch(o.GetNameForCreature(arkData, o.ClassString), wish, RegexOptions.IgnoreCase)));
                 }
 
                 List<GameObject> objectsList = filteredObjects.ToList();
