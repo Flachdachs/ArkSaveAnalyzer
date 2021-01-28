@@ -4,7 +4,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:maps="clr-namespace:ArkSaveAnalyzer.Maps"
-        d:DesignHeight="150" d:DesignWidth="800"
+        d:DesignHeight="150" d:DesignWidth="1024"
         DataContext="{Binding Map,Source={StaticResource Locator}}">
     <UserControl.Resources>
     </UserControl.Resources>
@@ -16,13 +16,19 @@
                     <Setter Property="VerticalAlignment" Value="Center" />
                 </Style>
             </DockPanel.Resources>
-            <RadioButton Content="The Island" Command="{Binding MapCommand}" CommandParameter="TheIsland" />
-            <RadioButton Content="Scorched Earth" Command="{Binding MapCommand}" CommandParameter="ScorchedEarth" />
-            <RadioButton Content="Aberration" Command="{Binding MapCommand}" CommandParameter="Aberration" />
-            <RadioButton Content="Extinction" Command="{Binding MapCommand}" CommandParameter="Extinction" />
-            <RadioButton Content="The Center" Command="{Binding MapCommand}" CommandParameter="TheCenter" />
+            <RadioButton Content="Island" Command="{Binding MapCommand}" CommandParameter="TheIsland" />
+            <RadioButton Content="ScE" Command="{Binding MapCommand}" CommandParameter="ScorchedEarth" />
+            <RadioButton Content="Ab" Command="{Binding MapCommand}" CommandParameter="Aberration" />
+            <RadioButton Content="Ext" Command="{Binding MapCommand}" CommandParameter="Extinction" />
+            <RadioButton Content="Gen 1" Command="{Binding MapCommand}" CommandParameter="Genesis1" />
+            <RadioButton Content="Center" Command="{Binding MapCommand}" CommandParameter="TheCenter" />
             <RadioButton Content="Ragnarok" Command="{Binding MapCommand}" CommandParameter="Ragnarok" />
+            <RadioButton Content="Valguero" Command="{Binding MapCommand}" CommandParameter="Valguero" />
+            <RadioButton Content="Cr.Isles" Command="{Binding MapCommand}" CommandParameter="CrystalIsles" />
             <RadioButton Content="Open File" Command="{Binding OpenFileCommand}" />
+            <Label Content="Filter" Target="{Binding ElementName=Filter}" />
+            <TextBox x:Name="Filter" Width="100" VerticalAlignment="Center" ToolTip="Regular Expression" Text="{Binding Filter,UpdateSourceTrigger=PropertyChanged,Delay=2000}" IsEnabled="{Binding UiEnabled}" />
+            <CheckBox Content="is RegExp" IsChecked="{Binding FilterIsRegExp}" Margin="5 0 0 0" VerticalAlignment="Center" />
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                 <Button Content="Artistic / Topographic" Command="{Binding MapStyleCommand}" Padding="5 1" Margin="3" />
             </StackPanel>
@@ -43,6 +49,10 @@
 
             <TabItem Header="Structures List">
                 <maps:MapStructuresListControl DataContext="{Binding}" />
+            </TabItem>
+
+            <TabItem Header="Structures Flat List">
+                <maps:MapStructuresFlatListControl DataContext="{Binding}" />
             </TabItem>
         </TabControl>
     </DockPanel>

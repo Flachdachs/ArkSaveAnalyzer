@@ -20,7 +20,6 @@ using ArkSaveAnalyzer.Maps;
 using ArkSaveAnalyzer.Savegame;
 using ArkSaveAnalyzer.Wildlife;
 using CommonServiceLocator;
-using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
 
 namespace ArkSaveAnalyzer {

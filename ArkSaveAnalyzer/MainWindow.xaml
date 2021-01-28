@@ -8,7 +8,7 @@
         xmlns:wildlife="clr-namespace:ArkSaveAnalyzer.Wildlife"
         xmlns:maps="clr-namespace:ArkSaveAnalyzer.Maps"
         xmlns:p="clr-namespace:ArkSaveAnalyzer.Properties"
-        Title="ARK Save Analyzer" Height="1000" Width="1000"
+        Title="ARK Save Analyzer" Height="1000" Width="1024"
         Left="{Binding MainWindowLeft,Source={x:Static p:Settings.Default},Mode=TwoWay}"
         Top="{Binding MainWindowTop,Source={x:Static p:Settings.Default},Mode=TwoWay}"
         DataContext="{Binding Main,Source={StaticResource Locator}}">

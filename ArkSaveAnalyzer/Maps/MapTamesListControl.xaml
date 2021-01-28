@@ -40,7 +40,7 @@
         <ListView.View>
             <GridView>
                 <GridViewColumn Width="80">
-                    <GridViewColumnHeader Content="Location" Command="{Binding SortCommand}" CommandParameter="{Binding Content,RelativeSource={RelativeSource Self}}" />
+                    <GridViewColumnHeader Content="Location" Command="{Binding SortTamesCommand}" CommandParameter="{Binding Content,RelativeSource={RelativeSource Self}}" />
                     <GridViewColumn.CellTemplate>
                         <DataTemplate DataType="{x:Type savegameToolkit:GameObject}">
                             <TextBlock>
@@ -56,7 +56,7 @@
                 </GridViewColumn>
 
                 <GridViewColumn Width="70">
-                    <GridViewColumnHeader Content="Id" Command="{Binding SortCommand}" CommandParameter="{Binding Content,RelativeSource={RelativeSource Self}}" />
+                    <GridViewColumnHeader Content="Id" Command="{Binding SortTamesCommand}" CommandParameter="{Binding Content,RelativeSource={RelativeSource Self}}" />
                     <GridViewColumn.CellTemplate>
                         <DataTemplate DataType="{x:Type savegameToolkit:GameObject}">
                             <TextBlock Text="{Binding Id}" />
@@ -65,7 +65,7 @@
                 </GridViewColumn>
 
                 <GridViewColumn Width="Auto">
-                    <GridViewColumnHeader Content="Creature" Command="{Binding SortCommand}" CommandParameter="{Binding Content,RelativeSource={RelativeSource Self}}" />
+                    <GridViewColumnHeader Content="Creature" Command="{Binding SortTamesCommand}" CommandParameter="{Binding Content,RelativeSource={RelativeSource Self}}" />
                     <GridViewColumn.CellTemplate>
                         <DataTemplate DataType="{x:Type savegameToolkit:GameObject}">
                             <TextBlock Text="{Binding Converter={StaticResource NameConverter}}" />
@@ -74,7 +74,7 @@
                 </GridViewColumn>
 
                 <GridViewColumn Width="Auto">
-                    <GridViewColumnHeader Content="Name" Command="{Binding SortCommand}" CommandParameter="{Binding Content,RelativeSource={RelativeSource Self}}" />
+                    <GridViewColumnHeader Content="Name" Command="{Binding SortTamesCommand}" CommandParameter="{Binding Content,RelativeSource={RelativeSource Self}}" />
                     <GridViewColumn.CellTemplate>
                         <DataTemplate DataType="{x:Type savegameToolkit:GameObject}">
                             <TextBlock Text="{Binding Converter={StaticResource TamedNameConverter}}" />
@@ -83,7 +83,7 @@
                 </GridViewColumn>
 
                 <GridViewColumn Width="Auto">
-                    <GridViewColumnHeader Content="Level" Command="{Binding SortCommand}" CommandParameter="{Binding Content,RelativeSource={RelativeSource Self}}" />
+                    <GridViewColumnHeader Content="Level" Command="{Binding SortTamesCommand}" CommandParameter="{Binding Content,RelativeSource={RelativeSource Self}}" />
                     <GridViewColumn.CellTemplate>
                         <DataTemplate DataType="{x:Type savegameToolkit:GameObject}">
                             <TextBlock Text="{Binding Converter={StaticResource LevelConverter}}" />
@@ -92,7 +92,7 @@
                 </GridViewColumn>
 
                 <GridViewColumn Width="Auto">
-                    <GridViewColumnHeader Content="Sex" Command="{Binding SortCommand}" CommandParameter="{Binding Content,RelativeSource={RelativeSource Self}}" />
+                    <GridViewColumnHeader Content="Sex" Command="{Binding SortTamesCommand}" CommandParameter="{Binding Content,RelativeSource={RelativeSource Self}}" />
                     <GridViewColumn.CellTemplate>
                         <DataTemplate DataType="{x:Type savegameToolkit:GameObject}">
                             <TextBlock Text="{Binding Converter={StaticResource SexConverter}}" />
@@ -101,7 +101,7 @@
                 </GridViewColumn>
 
                 <GridViewColumn Width="Auto">
-                    <GridViewColumnHeader Content="Tamer" Command="{Binding SortCommand}" CommandParameter="{Binding Content,RelativeSource={RelativeSource Self}}" />
+                    <GridViewColumnHeader Content="Tamer" Command="{Binding SortTamesCommand}" CommandParameter="{Binding Content,RelativeSource={RelativeSource Self}}" />
                     <GridViewColumn.CellTemplate>
                         <DataTemplate DataType="{x:Type savegameToolkit:GameObject}">
                             <TextBlock Text="{Binding Converter={StaticResource TamerConverter}}" />

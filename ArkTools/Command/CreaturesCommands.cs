@@ -22,8 +22,6 @@ namespace ArkTools.Command {
         private bool writeAllFields;
         private string inventory = "summary";
 
-        private ArkSavegame arkSavegame;
-        private GameObjectContainer container;
         private string outputDirectory;
 
         protected CreaturesBaseCommand(string name, string help = null) : base(name, help) {
@@ -60,20 +58,21 @@ namespace ArkTools.Command {
             Stopwatch stopwatch = new Stopwatch(GlobalOptions.UseStopWatch);
             // Load everything that is not an item and either has a parent or components
             // Drawback: includes structures and players
-            arkSavegame = new ArkSavegame().ReadBinary<ArkSavegame>(savePath, readingOptions
+            ArkSavegame arkSavegame = new ArkSavegame().ReadBinary<ArkSavegame>(savePath, readingOptions
                     .WithDataFiles(false)
                     .WithEmbeddedData(false)
                     .WithDataFilesObjectMap(false)
                     .WithObjectFilter(o => !o.IsItem && (o.Parent != null || o.Components.Any()))
                     .WithBuildComponentTree(true));
             stopwatch.Stop("Reading");
-            writeAnimalLists(filter);
+            writeAnimalLists(filter, arkSavegame);
             stopwatch.Stop("Dumping");
 
             stopwatch.Print();
         }
 
-        private void writeAnimalLists(Func<GameObject, bool> filter) {
+        private void writeAnimalLists(Func<GameObject, bool> filter, ArkSavegame arkSavegame) {
+            GameObjectContainer container;
             if (arkSavegame.HibernationEntries.Any()) {
                 List<GameObject> combinedObjects = arkSavegame.Objects;
 
@@ -129,7 +128,7 @@ namespace ArkTools.Command {
             }
 
             foreach (KeyValuePair<string, List<GameObject>> dinoList in dinoLists) {
-                writeList(dinoList);
+                writeList(dinoList, container, arkSavegame);
             }
         }
 
@@ -176,7 +175,7 @@ namespace ArkTools.Command {
             }, writingOptions);
         }
 
-        private void writeList(KeyValuePair<string, List<GameObject>> entry) {
+        private void writeList(KeyValuePair<string, List<GameObject>> entry, GameObjectContainer container, ArkSavegame arkSavegame) {
             string outputFile = Path.Combine(outputDirectory, entry.Key + ".json");
 
             List<GameObject> filteredClasses = entry.Value;

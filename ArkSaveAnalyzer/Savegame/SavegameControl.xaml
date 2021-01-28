@@ -20,21 +20,25 @@
                     <Setter Property="VerticalAlignment" Value="Center" />
                 </Style>
             </StackPanel.Resources>
-            <RadioButton Content="The Island" Command="{Binding ContentCommand}" CommandParameter="TheIsland" />
-            <RadioButton Content="Scorched Earth" Command="{Binding ContentCommand}" CommandParameter="ScorchedEarth" />
-            <RadioButton Content="Aberration" Command="{Binding ContentCommand}" CommandParameter="Aberration" />
-            <RadioButton Content="Extinction" Command="{Binding ContentCommand}" CommandParameter="Extinction" />
-            <RadioButton Content="The Center" Command="{Binding ContentCommand}" CommandParameter="TheCenter" />
+            <RadioButton Content="Island" Command="{Binding ContentCommand}" CommandParameter="TheIsland" />
+            <RadioButton Content="ScE" Command="{Binding ContentCommand}" CommandParameter="ScorchedEarth" />
+            <RadioButton Content="Ab" Command="{Binding ContentCommand}" CommandParameter="Aberration" />
+            <RadioButton Content="Ext" Command="{Binding ContentCommand}" CommandParameter="Extinction" />
+            <RadioButton Content="Gen 1" Command="{Binding ContentCommand}" CommandParameter="Genesis1" />
+            <RadioButton Content="Center" Command="{Binding ContentCommand}" CommandParameter="TheCenter" />
             <RadioButton Content="Ragnarok" Command="{Binding ContentCommand}" CommandParameter="Ragnarok" />
+            <RadioButton Content="Valguero" Command="{Binding ContentCommand}" CommandParameter="Valguero" />
+            <RadioButton Content="Cr.Isles" Command="{Binding ContentCommand}" CommandParameter="CrystalIsles" />
 
             <Label Content="Goto Id:" Target="{Binding ElementName=GotoId}" IsEnabled="{Binding UiEnabled}" />
-            <TextBox x:Name="GotoId" Width="70" Text="{Binding GotoId,UpdateSourceTrigger=PropertyChanged,Delay=1000}" VerticalAlignment="Center" IsEnabled="{Binding UiEnabled}" />
+            <TextBox x:Name="GotoId" Width="60" Text="{Binding GotoId,UpdateSourceTrigger=PropertyChanged,Delay=1000}" VerticalAlignment="Center" IsEnabled="{Binding UiEnabled}" />
 
             <Label Content="Class Filter:" Target="{Binding ElementName=Filter}" IsEnabled="{Binding UiEnabled}" />
-            <TextBox x:Name="Filter" Width="150" Text="{Binding FilterText,UpdateSourceTrigger=PropertyChanged,Delay=1000}" VerticalAlignment="Center"
+            <TextBox x:Name="Filter" Width="140" Text="{Binding FilterText,UpdateSourceTrigger=PropertyChanged,Delay=1000}" VerticalAlignment="Center"
                     IsEnabled="{Binding UiEnabled}" />
 
             <Button Content="Open File" VerticalAlignment="Center" Margin="10 0 0 0" Padding="5 0" Command="{Binding OpenFileCommand}" />
+            <Button Content="Test" VerticalAlignment="Center" Margin="5" Padding="5 0" Command="{Binding TestCommand}" />
         </StackPanel>
 
         <ListView x:Name="ListView" ItemsSource="{Binding Objects}" SelectedItem="{Binding SelectedObject}">

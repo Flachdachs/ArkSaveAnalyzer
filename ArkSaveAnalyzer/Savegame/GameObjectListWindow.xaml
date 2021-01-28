@@ -45,7 +45,8 @@
             <ListView.View>
                 <GridView>
 
-                    <GridViewColumn Header="Id" Width="70">
+                    <GridViewColumn Width="70">
+                        <GridViewColumnHeader Content="Id" Command="{Binding SortCommand}" CommandParameter="{Binding Content,RelativeSource={RelativeSource Self}}" />
                         <GridViewColumn.CellTemplate>
                             <DataTemplate DataType="{x:Type savegameToolkit:GameObject}">
                                 <TextBlock Text="{Binding Id}" />
@@ -53,7 +54,8 @@
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
 
-                    <GridViewColumn Header="Location" Width="80">
+                    <GridViewColumn Width="80">
+                        <GridViewColumnHeader Content="Location" Command="{Binding SortCommand}" CommandParameter="{Binding Content,RelativeSource={RelativeSource Self}}" />
                         <GridViewColumn.CellTemplate>
                             <DataTemplate DataType="{x:Type savegameToolkit:GameObject}">
                                 <TextBlock>
@@ -68,7 +70,8 @@
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
 
-                    <GridViewColumn Header="Name" Width="Auto">
+                    <GridViewColumn Width="Auto">
+                        <GridViewColumnHeader Content="Name" Command="{Binding SortCommand}" CommandParameter="{Binding Content,RelativeSource={RelativeSource Self}}" />
                         <GridViewColumn.CellTemplate>
                             <DataTemplate DataType="{x:Type savegameToolkit:GameObject}">
                                 <TextBlock Text="{Binding Converter={StaticResource StructureNameConverter}}" />
@@ -76,7 +79,8 @@
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
 
-                    <GridViewColumn Header="Class" Width="Auto">
+                    <GridViewColumn Width="Auto">
+                        <GridViewColumnHeader Content="Class" Command="{Binding SortCommand}" CommandParameter="{Binding Content,RelativeSource={RelativeSource Self}}" />
                         <GridViewColumn.CellTemplate>
                             <DataTemplate DataType="{x:Type savegameToolkit:GameObject}">
                                 <TextBlock Text="{Binding ClassString}" />

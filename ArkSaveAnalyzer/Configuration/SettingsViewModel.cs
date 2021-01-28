@@ -11,6 +11,7 @@ using GalaSoft.MvvmLight.Messaging;
 using MessageBox = System.Windows.MessageBox;
 
 namespace ArkSaveAnalyzer.Configuration {
+
     // ReSharper disable once ClassNeverInstantiated.Global
     public class SettingsViewModel : ViewModelBase {
         #region ArkSavedFolder
@@ -97,8 +98,8 @@ namespace ArkSaveAnalyzer.Configuration {
 
         private void handleWildlifeExclude(string name) {
             List<string> excluded = ExcludedWildlife
-                .Split(new[] {Environment.NewLine}, StringSplitOptions.RemoveEmptyEntries)
-                .Where(s => !string.IsNullOrWhiteSpace(s)).ToList();
+                    .Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries)
+                    .Where(s => !string.IsNullOrWhiteSpace(s)).ToList();
             if (excluded.Contains(name, StringComparer.InvariantCultureIgnoreCase))
                 return;
             excluded.Add(name);
@@ -108,8 +109,8 @@ namespace ArkSaveAnalyzer.Configuration {
 
         private void handleWildlifeWishList(string name) {
             List<string> wishList = WishListWildlife
-                .Split(new[] {Environment.NewLine}, StringSplitOptions.RemoveEmptyEntries)
-                .Where(s => !string.IsNullOrWhiteSpace(s)).ToList();
+                    .Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries)
+                    .Where(s => !string.IsNullOrWhiteSpace(s)).ToList();
             if (wishList.Contains(name, StringComparer.InvariantCultureIgnoreCase))
                 return;
             wishList.Add(name);
@@ -118,24 +119,24 @@ namespace ArkSaveAnalyzer.Configuration {
         }
 
         private void chooseSavedFolder() {
-            using (FolderBrowserDialog dialog = new FolderBrowserDialog()) {
-                dialog.ShowNewFolderButton = false;
-                dialog.SelectedPath = ArkSavedFolder;
+            using FolderBrowserDialog dialog = new FolderBrowserDialog {
+                    ShowNewFolderButton = false,
+                    SelectedPath = ArkSavedFolder
+            };
 
-                if (dialog.ShowDialog() == DialogResult.OK) {
-                    ArkSavedFolder = dialog.SelectedPath;
-                }
+            if (dialog.ShowDialog() == DialogResult.OK) {
+                ArkSavedFolder = dialog.SelectedPath;
             }
         }
 
         private void chooseWorkingDirectory() {
-            using (FolderBrowserDialog dialog = new FolderBrowserDialog()) {
-                dialog.ShowNewFolderButton = false;
-                dialog.SelectedPath = WorkingDirectory;
+            using FolderBrowserDialog dialog = new FolderBrowserDialog {
+                    ShowNewFolderButton = false,
+                    SelectedPath = WorkingDirectory
+            };
 
-                if (dialog.ShowDialog() == DialogResult.OK) {
-                    WorkingDirectory = dialog.SelectedPath;
-                }
+            if (dialog.ShowDialog() == DialogResult.OK) {
+                WorkingDirectory = dialog.SelectedPath;
             }
         }
 
@@ -144,4 +145,5 @@ namespace ArkSaveAnalyzer.Configuration {
             MessageBox.Show("Done.");
         }
     }
+
 }

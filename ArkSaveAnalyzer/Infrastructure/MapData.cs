@@ -32,8 +32,11 @@ namespace ArkSaveAnalyzer.Infrastructure {
             {"ScorchedEarth", new MapData("ScorchedEarth_P", 50, 50, 8000, 8000, null, 0, 0, 100, 100, 6.5, 4.1, 93.9, 95.6)},
             {"Aberration", new MapData("Aberration_P", 50, 50, 8000, 8000, null, 0, 0, 100, 100, 10.8, 9.2, 90.7, 89.7)},
             {"Extinction", new MapData("Extinction", 50, 50, 8000, 8000, null, 0, 0, 100, 100, 0, 0, 100, 100)},
+            {"Genesis1", new MapData("Genesis", 50, 50, 10500, 10500, null, -1.4, -1.4, 99.2, 101, 10, 10, 90, 90)},
             {"TheCenter", new MapData("TheCenter", 30.342237, 55.104168, 9584, 9600, null, 0, -2, 100, 100, 1, -2.5, 104.5, 101.0)},
-            {"Ragnarok", new MapData("Ragnarok", 50.009388, 50.009388, 13100, 13100, null, 0, 0, 100, 100, 0, 0, 100, 100)}
+            {"Ragnarok", new MapData("Ragnarok", 50.009388, 50.009388, 13100, 13100, null, 0, 0, 100, 100, 0, 0, 100, 100)},
+            {"Valguero", new MapData("Valguero_P", 50, 50, 8161, 8161, null, -1.2, -2.2, 99.5, 101.2, 0, 0, 100, 100)},
+            {"CrystalIsles", new MapData("CrystalIsles", 48.75, 50, 16000, 17000, null, -1.8, -1.4, 97.4, 103, 0, 0, 100, 100)}
         };
 
         public static MapData For(string mapName) {

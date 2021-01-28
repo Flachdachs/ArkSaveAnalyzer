@@ -22,6 +22,7 @@ namespace ArkSaveAnalyzer.Savegame {
         public RelayCommand<string> ContentCommand { get; }
         public RelayCommand ShowDataCommand { get; }
         public RelayCommand OpenFileCommand { get; }
+        public RelayCommand TestCommand { get; }
 
         public ObservableCollection<GameObject> Objects { get; } = new ObservableCollection<GameObject>();
 
@@ -84,6 +85,7 @@ namespace ArkSaveAnalyzer.Savegame {
             ContentCommand = new RelayCommand<string>(mapName => loadContent(mapName, false), s => UiEnabled);
             ShowDataCommand = new RelayCommand(showData, () => UiEnabled);
             OpenFileCommand = new RelayCommand(openFile, () => UiEnabled);
+            TestCommand = new RelayCommand(test, () => UiEnabled);
 
             Messenger.Default.Register<InvalidateMapDataMessage>(this, message => {
                 Application.Current.Dispatcher.Invoke(() => {
@@ -126,15 +128,26 @@ namespace ArkSaveAnalyzer.Savegame {
         }
 
         private void openFile() {
-            OpenFileDialog openFileDialog = new OpenFileDialog
-            {
+            OpenFileDialog openFileDialog = new OpenFileDialog {
                     FileName = fileName,
                     CheckFileExists = true
             };
-            if (openFileDialog.ShowDialog() == true)
-            {
+            if (openFileDialog.ShowDialog() == true) {
                 fileName = openFileDialog.FileName;
                 loadContent(fileName, false);
+            }
+        }
+
+        private async void test() {
+            GameObjectContainer objects = await SavegameService.GetGameObjects(currentMapName);
+
+            IEnumerable<GameObject> cryopods = objects.Where(o => o.ClassString == "PrimalItem_WeaponEmptyCryopod_C");
+
+            foreach (GameObject cryopod in cryopods) {
+                ArkContainer cryopodCreature = cryopod.GetCryopodCreature();
+                foreach (GameObject gameObject in cryopodCreature) {
+                    Messenger.Default.Send(new ShowGameObjectMessage(gameObject));
+                }
             }
         }
 

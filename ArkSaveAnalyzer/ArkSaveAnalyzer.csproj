@@ -91,6 +91,9 @@
     <Compile Include="Maps\MapStructuresControl.xaml.cs">
       <DependentUpon>MapStructuresControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Maps\MapStructuresFlatListControl.xaml.cs">
+      <DependentUpon>MapStructuresFlatListControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Maps\MapStructuresListControl.xaml.cs">
       <DependentUpon>MapStructuresListControl.xaml</DependentUpon>
     </Compile>
@@ -100,6 +103,7 @@
     <Compile Include="Maps\MapTamesListControl.xaml.cs">
       <DependentUpon>MapTamesListControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Maps\StructureViewModel.cs" />
     <Compile Include="Maps\StructuresViewModel.cs" />
     <Compile Include="Maps\MapService.cs" />
     <Compile Include="Maps\MapViewModel.cs" />
@@ -162,6 +166,10 @@
     <Page Include="Maps\MapStructuresControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Maps\MapStructuresFlatListControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Maps\MapStructuresListControl.xaml">
       <SubType>Designer</SubType>
@@ -253,6 +261,27 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="assets\Extinction.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="assets\CrystalIsles.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="assets\CrystalIsles_Topographic.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="assets\Extinction_Topographic.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="assets\Genesis1.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="assets\Genesis1_Topographic.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="assets\Valguero.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="assets\Valguero_Topographic.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
